@@ -21,8 +21,8 @@ Thank you for your interest in contributing to the **`<DDW-X>` Agentic Knowledge
 1. **Fork the Repository**: Create a personal fork on GitHub.
 2. **Clone & Branch**:
    ```bash
-   git clone https://github.com/YOUR-USERNAME/skillssssssssssssssssssssssss.git
-   cd skillssssssssssssssssssssssss
+   git clone https://github.com/YOUR-USERNAME/awesome-agent-skills.git
+   cd awesome-agent-skills
    git checkout -b feature/new-agent-skill
    ```
 3. **Develop & Format**:

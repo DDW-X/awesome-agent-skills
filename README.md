@@ -659,7 +659,7 @@ Explore the granular philosophy, prompt internals, and primary IDE triggers for 
 Act as a Principal AI Infrastructure Engineer. I want to equip this workspace with the complete <DDW-X> Agentic Knowledge Base (2026 Progressive Disclosure Standard).
 
 Task Instructions:
-1. Inspect the remote or local repository at `https://github.com/DDW-X/skillssssssssssssssssssssssss` (or local `.agents/skills/`).
+1. Inspect the remote or local repository at `https://github.com/DDW-X/awesome-agent-skills` (or local `.agents/skills/`).
 2. Sync and install all 30 skills into our workspace under `.agents/skills/`:
    - 1 Master Architect Meta-Skill (`Skill-Architect-Meta`)
    - 5 Anthropic Family Skills (`claude-fable-5`, `claude-opus`, `claude-sonnet`, `claude-code-engine`, `claude-integrations`)
@@ -1018,7 +1018,7 @@ Act as an AI Systems Engineer. Please install and configure all Open-Weights & P
 
 ```bash
 # Clone repository
-git clone https://github.com/ddw-x/skillssssssssssssssssssssssss.git ddwx-skills
+git clone https://github.com/DDW-X/awesome-agent-skills.git ddwx-skills
 cd ddwx-skills
 
 # Run automated validation check
