@@ -73,18 +73,23 @@ In autonomous coding environments, LLMs are only as capable as the operational c
     - [`<CS>/<DDW-X> Agentic Malware Analysis & Triage`](#-csddw-x-agentic-malware-analysis--triage)
     - [`<CS>/<DDW-X> IDE Security & Code Auditing Architect`](#-csddw-x-ide-security--code-auditing-architect)
     - [Agent Installation Prompt: CS Division](#️-agent-installation-prompt-cs-division)
-11. [Ultimate Skill Directory & Use-Case Guide](#-ultimate-skill-directory--use-case-guide)
+11. [Zero-Knowledge Master Skills & RAG Infrastructure](#-rtddw-x-zero-knowledge-master-skills--rag-infrastructure)
+    - [Overview & Blind Semantic Abstraction Engine](#-overview--elite-capabilities)
+    - [Dataset Extraction & Database Decompression](#-dataset-extraction-database-decompression--initialization)
+    - [Skill Installation & Environment Setup](#-skill-installation--setup)
+    - [Air-Gapped Workflow & Usage Guide](#-usage-guide--air-gapped-workflow)
+12. [Ultimate Skill Directory & Use-Case Guide](#-ultimate-skill-directory--use-case-guide)
     - [The Architect Meta-Skill](#-the-architect-meta-skill)
     - [Anthropic Lineage Breakdown](#-anthropic-lineage-breakdown)
     - [OpenAI Lineage Breakdown](#-openai-lineage-breakdown)
     - [Google Lineage Breakdown](#-google-lineage-breakdown)
     - [Open & Partner Ecosystems Breakdown](#-open--partner-ecosystems-breakdown)
-12. [Installation & Multi-IDE CLI Guide](#-installation--multi-ide-cli-guide)
-13. [Automated Verification & Quality Audit Report](#-automated-verification--quality-audit-report)
-14. [Roadmap & Future Milestones](#-roadmap--future-milestones)
-15. [Acknowledgements & Credits](#-acknowledgements--credits)
-16. [Creator Hub & Contact Information](#-creator-hub--contact-information)
-17. [Contributing & License](#-contributing--license)
+13. [Installation & Multi-IDE CLI Guide](#-installation--multi-ide-cli-guide)
+14. [Automated Verification & Quality Audit Report](#-automated-verification--quality-audit-report)
+15. [Roadmap & Future Milestones](#-roadmap--future-milestones)
+16. [Acknowledgements & Credits](#-acknowledgements--credits)
+17. [Creator Hub & Contact Information](#-creator-hub--contact-information)
+18. [Contributing & License](#-contributing--license)
 
 ---
 
@@ -647,6 +652,119 @@ Task Instructions:
 ```
 
 ---
+---
+
+## 🛡️ `<RT>/<DDW-X>` Zero-Knowledge Master Skills & RAG Infrastructure
+
+The **`<RT>/<DDW-X>` Division** introduces the **Zero-Knowledge Blind Semantic Abstraction Engine** — a privacy-first RAG architecture designed for sensitive security auditing, vulnerability triage, and air-gapped system diagnostics.
+
+```
+ ┌────────────────────────────────────────────────────────────────────────────────────────┐
+ │            <RT>/<DDW-X> ZERO-KNOWLEDGE BLIND ORCHESTRATION ARCHITECTURE                │
+ │                                                                                        │
+ │  1. USER PROMPT: "Perform automated memory forensics & AST injection triage"          │
+ │                                │                                                       │
+ │                                ▼                                                       │
+ │  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
+ │  │ AI AGENT: ELITE BLIND ORCHESTRATOR (Zero Raw Text Exposure)                     │  │
+ │  │ Formulates BM25 Search Vector ──► [zk_semantic_router.py]                        │  │
+ │  │ Returns ONLY Cryptographic UUIDs: ["TAG-0x89F2", "TAG-0xA1C4", "TAG-0x55E9"]    │  │
+ │  └─────────────────────────────────┬────────────────────────────────────────────────┘  │
+ │                                    │                                                   │
+ │                                    ▼                                                   │
+ │  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
+ │  │ AIR-GAPPED PAYLOAD COMPILER: [zk_payload_compiler.py]                            │  │
+ │  │ Direct Local SQLite Connection ──► D-csR_Index/zk_private_rag.db                 │  │
+ │  │ Reconstitutes Verified Blobs   ──► Secure_Output_Workspace.md (Local Disk Only) │  │
+ │  └──────────────────────────────────────────────────────────────────────────────────┘  │
+ └────────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+### 🌟 Overview & Elite Capabilities
+
+The `<RT>/<DDW-X>` architecture partitions security operations across four specialized Master Skill domains while enforcing zero context-window pollution:
+
+| Master Skill Domain | Core Operational Scope & Technical Capabilities |
+|---|---|
+| **Threat Hunting & Detection** | MITRE ATT&CK Enterprise mapping, high-signal Sysmon XML telemetry, multi-target Sigma compilation (Splunk SPL & Elastic DSL). |
+| **Reverse Engineering & Decompilation** | Headless Ghidra JSON-RPC socket bridging (`127.0.0.1:13337`), PE/ELF structural header dissection, Shannon section entropy profiling, and OLLVM CFG de-flattening. |
+| **AST Security & SAST Auditing** | Python native `ast.NodeVisitor` syntax tree linters for code injection (`eval`/`exec`), command injection (`subprocess shell=True`), and OWASP Top 10 remediation (A01, A03, A10). |
+| **AI Safety & LLM Red Teaming** | Prompt injection defense engines, heuristic jailbreak filters, constitutional boundary delimiters, and autonomous tool sandboxing. |
+
+#### 🔒 The Blind Semantic Abstraction Engine
+Unlike traditional RAG systems that flood the LLM's active reasoning context with hundreds of kilobytes of unvetted text, the **Blind Orchestrator** never directly reads or ingests sensitive source documents:
+- The AI formulates high-precision BM25 search queries and executes `zk_semantic_router.py`.
+- The router returns purely mathematical identifiers (**TAGs**).
+- The AI passes these TAGs to `zk_payload_compiler.py`, which fetches and writes the verified payload directly to disk (`Secure_Output_Workspace.md`) in an isolated, air-gapped process.
+
+---
+
+### 📦 Dataset Extraction, Database Decompression & Initialization
+
+To maintain maximum compression efficiency and comply with repository size limits, the underlying data corpora are packaged in dual compressed archives:
+
+> [!WARNING]
+> **CRITICAL SETUP REQUIREMENTS**:
+> 1. **Raw Dataset Archive (`D-csR.zip`)**: Contains 177 MB of raw diagnostic documentation and source scripts. Must be extracted into the workspace root.
+> 2. **Pre-Built ZK Database (`D-csR_Index/zk_private_rag.rar`)**: The pre-indexed SQLite database is ~480 MB uncompressed (`~479,848 KB`) and compressed with **WinRAR (RAR4 format)**. It must be extracted into `D-csR_Index/` to restore `zk_private_rag.db`.
+
+#### 🚀 Terminal Setup & Decompression Commands:
+
+```bash
+# ---------------------------------------------------------
+# STEP 1: Extract the 177 MB Raw Dataset Archive
+# ---------------------------------------------------------
+unzip D-csR.zip -d .
+
+# ---------------------------------------------------------
+# STEP 2: Extract the ~480 MB Pre-Indexed ZK Database (RAR4 format)
+# Ensure zk_private_rag.db is extracted inside D-csR_Index/
+# ---------------------------------------------------------
+unrar x D-csR_Index/zk_private_rag.rar D-csR_Index/
+
+# ---------------------------------------------------------
+# STEP 3: (Alternative) Rebuild the Zero-Knowledge Index from Scratch
+# If you prefer to generate a fresh SQLite index directly from D-csR:
+# ---------------------------------------------------------
+python src/core/rag/zk_advanced_indexer.py --source-dir D-csR --index-dir D-csR_Index --rebuild
+```
+
+---
+
+### ⚙️ Skill Installation & Setup
+
+The `<RT>/<DDW-X>` Master Skills are located in `.agents/skills/RT/` (and linked via `Skills-CS/`). To register them in your IDE agentic runtime:
+
+1. **Google Antigravity IDE**: Place the `.md` skills directly into `.agents/skills/` or invoke them via the Master Orchestrator prompt.
+2. **Cursor AI**: Symlink or reference the skill instructions inside `.cursorrules` to enforce continuous AST and security auditing during code editing.
+3. **Claude Code CLI**: Add `.agents/skills/RT/` to your project system context to enable automated `zk_semantic_router.py` tool calling.
+4. **Environment Prerequisite**: Ensure Python 3.10+ is accessible in your system `PATH` with `sqlite3` and standard library support enabled.
+
+---
+
+### 🔄 Usage Guide & Air-Gapped Workflow
+
+When interacting with an agent equipped with `<RT>/<DDW-X>` Master Skills, the execution follows an autonomous 4-stage Zero-Knowledge pipeline:
+
+```text
+[STAGE 1: User Directive]
+   User asks: "Audit this Python backend for OWASP A03 SQL Injection and generate remediation diffs."
+
+[STAGE 2: Blind Semantic Routing]
+   Agent executes:
+   python src/core/rag/zk_semantic_router.py --query "OWASP A03 SQL Injection parameterized query AST"
+   Router Output: ["TAG-0x1102", "TAG-0x1105", "TAG-0x2409"]
+
+[STAGE 3: Air-Gapped Payload Compilation]
+   Agent executes:
+   python src/core/rag/zk_payload_compiler.py --tags TAG-0x1102,TAG-0x1105,TAG-0x2409 --output Secure_Output_Workspace.md
+
+[STAGE 4: Local Inspection & Execution]
+   Payload is compiled to disk without passing raw sensitive data through external AI inference endpoints.
+```
+
 ## <img src="assets/icons/directory.svg" width="20" height="20" align="absmiddle" alt="directory" /> Ultimate Skill Directory & Use-Case Guide
 
 Explore the granular philosophy, prompt internals, and primary IDE triggers for every skill in the knowledge base:
