@@ -77,8 +77,14 @@ In autonomous coding environments, LLMs are only as capable as the operational c
     - [Overview & Blind Semantic Abstraction Engine](#-overview--elite-capabilities)
     - [Dataset Extraction & Database Decompression](#-dataset-extraction-database-decompression--initialization)
     - [Skill Installation & Environment Setup](#-skill-installation--setup)
+    - [`<RT>/<DDW-X> Threat Hunting & Attack Surface`](#-1-agentsskillsrtrt-ddw-x-threat-hunting-attack-surfacemd)
+    - [`<RT>/<DDW-X> Reverse Engineering & Binary Forensics`](#-2-agentsskillsrtrt-ddw-x-reverse-engineering-binary-forensicsmd)
+    - [`<RT>/<DDW-X> SAST & Secure Code Auditing`](#-3-agentsskillsrtrt-ddw-x-sast-code-auditingmd)
+    - [`<RT>/<DDW-X> AI Safety & LLM Red Teaming`](#-4-agentsskillsrtrt-ddw-x-ai-safety-guardrailsmd)
+    - [`<RT>/<DDW-X> ++ Cognitive Bridge Modifier`](#-5-agentsskillsrtrt-ddw-x-cognitive-bridge-plusplusmd)
     - [Air-Gapped Workflow & Usage Guide](#-usage-guide--air-gapped-workflow)
     - [The Cognitive Bridge: Using the `++` Modifier](#-the-cognitive-bridge-using-the--modifier)
+    - [Agent Installation Prompt: Zero-Knowledge RAG Division](#️-agent-installation-prompt-zero-knowledge-rag-division)
 12. [Ultimate Skill Directory & Use-Case Guide](#-ultimate-skill-directory--use-case-guide)
     - [The Architect Meta-Skill](#-the-architect-meta-skill)
     - [Anthropic Lineage Breakdown](#-anthropic-lineage-breakdown)
@@ -747,22 +753,123 @@ The `<RT>/<DDW-X>` Master Skills are located in `.agents/skills/RT/` (and linked
 
 ---
 
-### 🛡️ Agent Installation Prompt: Zero-Knowledge RAG Division
+### <img src="assets/icons/network.svg" width="18" height="18" align="absmiddle" alt="network" /> 1. [`.agents/skills/RT/RT-DDW-X-Threat-Hunting-Attack-Surface.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-Threat-Hunting-Attack-Surface.md)
+- **Role**: *Principal Threat Hunting Architect & Attack Surface Assessment Orchestrator*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` (SQLite FTS5 BM25 Engine / `D-csR/` Topology).
+- **Embedded Capabilities**:
+  - **Zero-Knowledge Telemetry Routing**: Formulates high-density keyword vectors across Windows Sysmon (EID 1, 8, 10), Linux auditd, and Zeek network IDS signatures.
+  - **MITRE ATT&CK Enterprise Mapping**: Translates adversary TTP queries (T1055 Process Injection, T1003 Credential Dumping, T1059 Command Interpreters) into cryptographic TAG routes.
+  - **Air-Gapped Sigma/SPL Synthesis**: Compiles defensive Sigma rule templates and Splunk SPL queries directly to `Secure_Output_Workspace.md` without exposing raw logs.
+  - **Deterministic BM25 Scoring**: Evaluates keyword relevance and returns confidence scores (`> 90%`) for attack surface triangulation.
 
-> **Copy & Paste this prompt directly into Cursor, Antigravity IDE, Claude Code, or VS Code Copilot to activate the Zero-Knowledge RAG Division:**
+```python
+# [ZERO-KNOWLEDGE ROUTER] Dynamic Threat Hunting & ATT&CK Matrix Retrieval
+def route_threat_hunting_intel(ttp_query: str, top_k: int = 5) -> list:
+    """Routes MITRE ATT&CK and Sysmon telemetry keywords to cryptographic tags."""
+    cmd = ["python", "src/core/rag/zk_semantic_router.py", f"MITRE ATT&CK {ttp_query} Sysmon EID telemetry", "--top-k", str(top_k), "--json"]
+    res = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    routes = json.loads(res.stdout)
+    # Extracts only mathematical tags (Zero Raw Text Ingestion)
+    return [r["tag"] for r in routes if r["confidence_pct"] >= 80.0]
+```
 
-```markdown
-Act as the Principal AI Zero-Knowledge Architect and Security Diagnostics Engineer.
-I want to equip this workspace with the <RT>/<DDW-X> Zero-Knowledge Master Skills & RAG Infrastructure.
+---
 
-Task Instructions:
-1. Verify the availability of the Zero-Knowledge database at `D-csR_Index/zk_private_rag.db` (ensure `zk_private_rag.rar` is unrarred).
-2. Inspect the Master Skills in `.agents/skills/` and `Skills-CS/`.
-3. When tasked with sensitive security auditing, vulnerability triage, or code inspections, operate as an Elite Blind Orchestrator:
-   - Formulate targeted BM25 search queries and execute `python src/core/rag/zk_semantic_router.py --query "<search terms>"`.
-   - Receive the mathematical UUID tags (e.g. `TAG-0x101`, `TAG-0x102`).
-   - Execute `python src/core/rag/zk_payload_compiler.py --tags <TAGS> --output Secure_Output_Workspace.md` to reconstitute verified diagnostic data directly to local disk.
-4. Maintain 100% data privacy: NEVER copy un-vetted raw dataset text directly into the AI conversation context window.
+### <img src="assets/icons/lock.svg" width="18" height="18" align="absmiddle" alt="lock" /> 2. [`.agents/skills/RT/RT-DDW-X-Reverse-Engineering-Binary-Forensics.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-Reverse-Engineering-Binary-Forensics.md)
+- **Role**: *Principal Reverse Engineering Architect & Lead Binary Forensics Engineer*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` (SQLite FTS5 BM25 Engine / `D-csR/` Topology).
+- **Embedded Capabilities**:
+  - **Header Structural Forensics**: Queries PE32/PE64 (`IMAGE_DOS_HEADER`, `e_lfanew`, Optional Header, IAT) and ELF64 layout specifications blindly.
+  - **Shannon Section Entropy Profiling**: Mathematical byte-distribution analysis for identifying packed payloads, custom cryptors, and encrypted code segments.
+  - **OLLVM Control-Flow De-flattening**: Retrieves dispatcher reconstruction logic, state-machine constant mapping, and basic-block recovery templates.
+  - **Ghidra Headless Socket Automation**: Interfaces with `GhidraMCPBridge` and `DecompInterface` for C-AST decompilation without raw data leaks.
+
+```python
+# [ZERO-KNOWLEDGE ROUTER] Binary Dissection & Ghidra Decompiler Bridge Retrieval
+def route_binary_forensics_spec(header_type: str, arch: str = "x86_64") -> list:
+    """Routes PE/ELF structural header and OLLVM de-obfuscation queries to ZK tags."""
+    query = f"{header_type} {arch} PE structural header Shannon entropy OLLVM de-flattening"
+    cmd = ["python", "src/core/rag/zk_semantic_router.py", query, "--top-k", "5", "--json"]
+    res = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    tags = [item["tag"] for item in json.loads(res.stdout)]
+    # Air-Gapped compilation to local workspace
+    subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags], check=True)
+    return tags
+```
+
+---
+
+### <img src="assets/icons/audit.svg" width="18" height="18" align="absmiddle" alt="audit" /> 3. [`.agents/skills/RT/RT-DDW-X-SAST-Code-Auditing.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-SAST-Code-Auditing.md)
+- **Role**: *Principal SAST & Secure Code Auditing Architect*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` (SQLite FTS5 BM25 Engine / `D-csR/` Topology).
+- **Embedded Capabilities**:
+  - **Python AST Taint Tracking**: NodeVisitor-based syntax tree scanners analyzing source-to-sink untrusted data flows and injection points.
+  - **OWASP Top 10 Remediation**: Parameterized database adapters (A03 SQLi), safe path containment assertions (A01 Path Traversal), and RFC 1918 CIDR SSRF filters (A10).
+  - **Safe Deserialization Paradigms**: Automated migration patterns from unsafe `pickle.loads` to typed Pydantic models and `yaml.safe_load`.
+  - **Secrets Hygiene Linters**: Regex-based entropy linters identifying hardcoded tokens, API keys, and private credentials in repository code.
+
+```python
+# [SECURE ENFORCEMENT] AST-Level SQL Injection & Command Injection Verifier
+class ASTSecurityAuditor(ast.NodeVisitor):
+    """Inspects AST nodes for dangerous code execution sinks and unparameterized calls."""
+    def visit_Call(self, node):
+        if isinstance(node.func, ast.Attribute) and node.func.attr == "execute":
+            # Check for raw string concatenation in cursor.execute calls
+            if any(isinstance(arg, ast.BinOp) and isinstance(arg.op, ast.Add) for arg in node.args):
+                raise SecurityVulnerabilityError("OWASP A03: Unparameterized SQL concatenation detected.")
+        self.generic_visit(node)
+```
+
+---
+
+### <img src="assets/icons/cpu.svg" width="18" height="18" align="absmiddle" alt="cpu" /> 4. [`.agents/skills/RT/RT-DDW-X-AI-Safety-Guardrails.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-AI-Safety-Guardrails.md)
+- **Role**: *Principal AI Safety, LLM Red Teaming & Guardrails Architect*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` (SQLite FTS5 BM25 Engine / `D-csR/` Topology).
+- **Embedded Capabilities**:
+  - **Prompt Injection Defense Engine**: Structural delimiter isolation (`<UNTRUSTED_PAYLOAD>`), dual-pass verification filters, and canary token validation.
+  - **Multi-Turn Jailbreak Analysis**: Persona subversion heuristics, token smuggling mitigations, and constitutional system prompt anchoring.
+  - **PII & Canary Extraction Shielding**: Output sanitization pipelines preventing training data memorization leaks and system prompt exfiltration.
+  - **Autonomous Tool-Calling Guardrails**: Strict JSON schema parameter typing, destructive command blocks, and rate-limiting hooks.
+
+```python
+# [ZERO-KNOWLEDGE ROUTER] AI Safety & Jailbreak Mitigation Rule Retrieval
+def route_ai_guardrails_intel(attack_vector: str) -> list:
+    """Routes LLM red teaming patterns and constitutional guardrails to ZK tags."""
+    query = f"prompt injection {attack_vector} delimiter isolation constitutional guardrails"
+    cmd = ["python", "src/core/rag/zk_semantic_router.py", query, "--top-k", "3", "--json"]
+    res = subprocess.run(cmd, capture_output=True, text=True, check=True)
+    routes = json.loads(res.stdout)
+    tags = [r["tag"] for r in routes]
+    subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags], check=True)
+    return tags
+```
+
+---
+
+### <img src="assets/icons/agent.svg" width="18" height="18" align="absmiddle" alt="agent" /> 5. [`.agents/skills/RT/RT-DDW-X-Cognitive-Bridge-PlusPlus.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-Cognitive-Bridge-PlusPlus.md)
+- **Role**: *Active Cognitive Bridge & Synthesis Modifier Engine*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` ➔ `Secure_Output_Workspace.md` (Isolated Workspace Ingestion).
+- **Embedded Capabilities**:
+  - **Dual-Mode Dynamic Execution**: Seamlessly toggles from default Blind Orchestrator (zero context load) to Active Synthesis Mode when `++` is detected.
+  - **Safe Workspace Ingestion Protocol**: Ingests exclusively the pre-filtered `Secure_Output_Workspace.md` file after compilation, maintaining 100% air-gapping from `D-csR`.
+  - **Deep Architectural Synthesis**: Unleashes Principal DevSecOps reasoning to dissect extracted payload blocks, rewrite vulnerable code, and solve complex security tasks.
+  - **Production Remediation Output**: Outputs complete, production-ready code replacements prefaced with the `[COGNITIVE BRIDGE ACTIVE]` header.
+
+```python
+# [COGNITIVE BRIDGE PROTOCOL] Safe Workspace Ingestion & Synthesis Pipeline
+def execute_cognitive_bridge_pipeline(user_query: str, skill_name: str) -> str:
+    """Executes ZK routing, compiles payload, and safely ingests only the workspace file."""
+    # Step 1: Execute Blind Routing & Air-Gapped Compilation
+    router_res = subprocess.run(["python", "src/core/rag/zk_semantic_router.py", user_query, "--tags-only"], capture_output=True, text=True, check=True)
+    tags = router_res.stdout.strip().split()
+    subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags, "--output", "Secure_Output_Workspace.md"], check=True)
+    
+    # Step 2: Safe Ingestion of Compiled Workspace ONLY (D-csR remains untouched)
+    with open("Secure_Output_Workspace.md", "r", encoding="utf-8") as f:
+        workspace_payload = f.read()
+    
+    # Step 3: Return payload to AI reasoning engine for elite synthesis
+    return workspace_payload
 ```
 
 ---
@@ -813,6 +920,35 @@ When the `++` modifier is engaged:
 To trigger the Cognitive Bridge and receive active analysis and code synthesis:
 
 > "Act as the `<RT>/<DDW-X>` SAST & Secure Code Auditing Architect **++**. Audit this authentication handler for timing attacks and SQL injection, cross-reference our private vulnerability standards, and provide a fully remediated, production-ready implementation."
+
+---
+
+### 🛡️ Agent Installation Prompt: Zero-Knowledge RAG Division
+
+> **Copy & Paste this prompt directly into Cursor, Antigravity IDE, Claude Code, or VS Code Copilot to activate all 5 Master Skills in the Zero-Knowledge RAG Division:**
+
+```markdown
+Act as the Principal AI Zero-Knowledge Architect and Security Diagnostics Engineer.
+I want to equip this workspace with the complete <RT>/<DDW-X> Zero-Knowledge Master Skills & RAG Infrastructure.
+
+Task Instructions:
+1. Inspect the `.agents/skills/RT/` directory in our workspace:
+   - `<RT>/<DDW-X> Threat Hunting & Attack Surface Assessment Orchestrator` (`RT-DDW-X-Threat-Hunting-Attack-Surface.md`)
+   - `<RT>/<DDW-X> Reverse Engineering & Binary Forensics Orchestrator` (`RT-DDW-X-Reverse-Engineering-Binary-Forensics.md`)
+   - `<RT>/<DDW-X> SAST & Secure Code Auditing Architect` (`RT-DDW-X-SAST-Code-Auditing.md`)
+   - `<RT>/<DDW-X> AI Safety, Red Teaming & Guardrails Architect` (`RT-DDW-X-AI-Safety-Guardrails.md`)
+   - `<RT>/<DDW-X> ++ Cognitive Bridge Modifier` (`RT-DDW-X-Cognitive-Bridge-PlusPlus.md`)
+2. Verify the availability of the Zero-Knowledge database at `D-csR_Index/zk_private_rag.db` (ensure `zk_private_rag.rar` is unrarred or run `zk_advanced_indexer.py`).
+3. By default, operate as an Elite Blind Orchestrator:
+   - Formulate targeted BM25 search queries and execute `python src/core/rag/zk_semantic_router.py "<search terms>" --top-k 5`.
+   - Receive the mathematical UUID tags (e.g. `TAG-4F91-B2`, `TAG-8A14-C9`).
+   - Execute `python src/core/rag/zk_payload_compiler.py TAG-1 TAG-2 --output Secure_Output_Workspace.md` to reconstitute verified diagnostic data directly to local disk.
+   - Conclude: "I have routed your request through the BM25 index and securely compiled the optimal payload into `Secure_Output_Workspace.md`. I have not viewed the contents."
+4. When the user appends the `++` modifier (e.g., "Use Threat Hunting ++"), activate the Cognitive Bridge:
+   - Allow the base ZK skill to route and compile to `Secure_Output_Workspace.md`.
+   - Safely ingest ONLY `Secure_Output_Workspace.md` into context (NEVER read raw `D-csR/` files directly).
+   - Unleash Principal Security Engineer reasoning to analyze, refactor, and synthesize the extracted payloads.
+```
 
 ---
 ## <img src="assets/icons/directory.svg" width="20" height="20" align="absmiddle" alt="directory" /> Ultimate Skill Directory & Use-Case Guide
