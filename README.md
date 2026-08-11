@@ -78,6 +78,7 @@ In autonomous coding environments, LLMs are only as capable as the operational c
     - [Dataset Extraction & Database Decompression](#-dataset-extraction-database-decompression--initialization)
     - [Skill Installation & Environment Setup](#-skill-installation--setup)
     - [Air-Gapped Workflow & Usage Guide](#-usage-guide--air-gapped-workflow)
+    - [The Cognitive Bridge: Using the `++` Modifier](#-the-cognitive-bridge-using-the--modifier)
 12. [Ultimate Skill Directory & Use-Case Guide](#-ultimate-skill-directory--use-case-guide)
     - [The Architect Meta-Skill](#-the-architect-meta-skill)
     - [Anthropic Lineage Breakdown](#-anthropic-lineage-breakdown)
@@ -786,6 +787,32 @@ When interacting with an agent equipped with `<RT>/<DDW-X>` Master Skills, the e
 [STAGE 4: Local Inspection & Execution]
    Payload is compiled to disk without passing raw sensitive data through external AI inference endpoints.
 ```
+
+---
+
+### ⚡ The Cognitive Bridge: Using the `++` Modifier
+
+The `<RT>/<DDW-X>` ecosystem features a built-in **Dual-Mode Execution Architecture** allowing developers and security operators to dynamically toggle between strict Zero-Knowledge air-gapping and high-intelligence cognitive synthesis:
+
+#### 1. Dual-Mode Architecture: Blind vs. Cognitive Bridge
+- **Default Mode (Zero-Knowledge Blind Orchestrator)**: By default, all `<RT>/<DDW-X>` skills operate in blind isolation. The AI converts intent into BM25 vectors, routes abstract mathematical tags (`TAG-XXXX-YY`), and triggers air-gapped payload dumps to `Secure_Output_Workspace.md` without loading or reading the text in its context window.
+- **`++` Modifier Mode (Active Cognitive Bridge)**: Appending the `++` suffix to any request, skill prompt, or task (e.g., `Threat Hunting ++`, `Reverse Engineering ++`, `SAST Auditing ++`) activates the **Cognitive Bridge** (`.agents/skills/RT/RT-DDW-X-Cognitive-Bridge-PlusPlus.md`).
+
+#### 2. How it Works: The Ingestion Protocol
+When the `++` modifier is engaged:
+1. **Air-Gapped Compilation**: The system executes the base Zero-Knowledge routing through `zk_semantic_router.py` and compiles the matched payload into `Secure_Output_Workspace.md` via `zk_payload_compiler.py`.
+2. **Authorized Workspace Ingestion**: The AI is granted explicit permission to read and ingest **ONLY** the compiled `Secure_Output_Workspace.md` file from the local workspace.
+3. **Deep Cognitive Synthesis**: With the verified payload loaded into reasoning context, the AI applies full architectural intelligence to dissect AST trees, evaluate TTPs, reconstruct pseudo-C decompilations, rewrite insecure code, and formulate end-to-end remediation plans.
+
+#### 3. Strict Boundary & Data Isolation Guarantee
+> [!IMPORTANT]
+> **Zero Direct Corpus Access**: Even when operating under the `++` Cognitive Bridge modifier, the AI is **STRICTLY FORBIDDEN** from directly reading, traversing, or viewing the raw `D-csR/` directory. All data ingestion must pass through the SQLite BM25 indexing and compiler filters first, ensuring only targeted, relevant payload blocks enter the active context window.
+
+#### 4. Example Prompt: Invoking the `++` Modifier
+
+To trigger the Cognitive Bridge and receive active analysis and code synthesis:
+
+> "Act as the `<RT>/<DDW-X>` SAST & Secure Code Auditing Architect **++**. Audit this authentication handler for timing attacks and SQL injection, cross-reference our private vulnerability standards, and provide a fully remediated, production-ready implementation."
 
 ---
 ## <img src="assets/icons/directory.svg" width="20" height="20" align="absmiddle" alt="directory" /> Ultimate Skill Directory & Use-Case Guide
