@@ -654,9 +654,11 @@ Task Instructions:
 ---
 ---
 
+---
+
 ## 🛡️ `<RT>/<DDW-X>` Zero-Knowledge Master Skills & RAG Infrastructure
 
-The **`<RT>/<DDW-X>` Division** introduces the **Zero-Knowledge Blind Semantic Abstraction Engine** — a privacy-first RAG architecture designed for sensitive security auditing, vulnerability triage, and air-gapped system diagnostics.
+The **`<RT>/<DDW-X>` Division** introduces the **Zero-Knowledge Blind Semantic Abstraction Engine** — a state-of-the-art, privacy-preserving RAG architecture designed for sensitive security auditing, vulnerability triage, and air-gapped system diagnostics.
 
 ```
  ┌────────────────────────────────────────────────────────────────────────────────────────┐
@@ -686,18 +688,18 @@ The **`<RT>/<DDW-X>` Division** introduces the **Zero-Knowledge Blind Semantic A
 
 The `<RT>/<DDW-X>` architecture partitions security operations across four specialized Master Skill domains while enforcing zero context-window pollution:
 
-| Master Skill Domain | Core Operational Scope & Technical Capabilities |
-|---|---|
-| **Threat Hunting & Detection** | MITRE ATT&CK Enterprise mapping, high-signal Sysmon XML telemetry, multi-target Sigma compilation (Splunk SPL & Elastic DSL). |
-| **Reverse Engineering & Decompilation** | Headless Ghidra JSON-RPC socket bridging (`127.0.0.1:13337`), PE/ELF structural header dissection, Shannon section entropy profiling, and OLLVM CFG de-flattening. |
-| **AST Security & SAST Auditing** | Python native `ast.NodeVisitor` syntax tree linters for code injection (`eval`/`exec`), command injection (`subprocess shell=True`), and OWASP Top 10 remediation (A01, A03, A10). |
-| **AI Safety & LLM Red Teaming** | Prompt injection defense engines, heuristic jailbreak filters, constitutional boundary delimiters, and autonomous tool sandboxing. |
+| Master Skill Domain | Key Operational Capabilities | RAG Integration Tool |
+|---|---|---|
+| **<img src="assets/icons/network.svg" width="16" height="16" align="absmiddle" /> Threat Hunting & Detection** | MITRE ATT&CK Enterprise telemetry, high-signal Sysmon XML filters (EID 1, 8, 10), and multi-target Sigma compilers (Splunk SPL & Elastic DSL). | `zk_semantic_router.py` |
+| **<img src="assets/icons/lock.svg" width="16" height="16" align="absmiddle" /> Reverse Engineering & Decompilation** | Headless Ghidra JSON-RPC socket bridging (`127.0.0.1:13337`), PE/ELF structural header dissection, Shannon section entropy profiling, and OLLVM CFG de-flattening. | `bridge_mcp_ghidra.py` |
+| **<img src="assets/icons/audit.svg" width="16" height="16" align="absmiddle" /> AST Security & SAST Auditing** | Python native `ast.NodeVisitor` syntax tree linters for code injection (`eval`/`exec`), command injection (`subprocess shell=True`), and OWASP Top 10 remediation (A01, A03, A10). | `zk_payload_compiler.py` |
+| **<img src="assets/icons/cpu.svg" width="16" height="16" align="absmiddle" /> AI Safety & LLM Red Teaming** | Prompt injection defense engines, heuristic jailbreak filters, constitutional boundary delimiters, and autonomous tool sandboxing. | `zk_semantic_router.py` |
 
 #### 🔒 The Blind Semantic Abstraction Engine
 Unlike traditional RAG systems that flood the LLM's active reasoning context with hundreds of kilobytes of unvetted text, the **Blind Orchestrator** never directly reads or ingests sensitive source documents:
-- The AI formulates high-precision BM25 search queries and executes `zk_semantic_router.py`.
-- The router returns purely mathematical identifiers (**TAGs**).
-- The AI passes these TAGs to `zk_payload_compiler.py`, which fetches and writes the verified payload directly to disk (`Secure_Output_Workspace.md`) in an isolated, air-gapped process.
+- **Mathematical Token Routing**: The AI formulates high-precision BM25 search queries and executes `zk_semantic_router.py`.
+- **Abstract Cryptographic Tags**: The router queries `D-csR_Index/zk_private_rag.db` and returns purely mathematical identifiers (**TAGs** e.g., `TAG-0x89F2`).
+- **Air-Gapped Local Output**: The AI passes these TAGs to `zk_payload_compiler.py`, which fetches and writes the verified payload directly to disk (`Secure_Output_Workspace.md`) in an isolated, air-gapped process without sending raw plain text to inference APIs.
 
 ---
 
@@ -740,7 +742,27 @@ The `<RT>/<DDW-X>` Master Skills are located in `.agents/skills/RT/` (and linked
 1. **Google Antigravity IDE**: Place the `.md` skills directly into `.agents/skills/` or invoke them via the Master Orchestrator prompt.
 2. **Cursor AI**: Symlink or reference the skill instructions inside `.cursorrules` to enforce continuous AST and security auditing during code editing.
 3. **Claude Code CLI**: Add `.agents/skills/RT/` to your project system context to enable automated `zk_semantic_router.py` tool calling.
-4. **Environment Prerequisite**: Ensure Python 3.10+ is accessible in your system `PATH` with `sqlite3` and standard library support enabled.
+4. **Execution Permissions**: Ensure Python 3.10+ is accessible in your system `PATH` and that your IDE agent has execution permissions to invoke `zk_semantic_router.py` and `zk_payload_compiler.py`.
+
+---
+
+### 🛡️ Agent Installation Prompt: Zero-Knowledge RAG Division
+
+> **Copy & Paste this prompt directly into Cursor, Antigravity IDE, Claude Code, or VS Code Copilot to activate the Zero-Knowledge RAG Division:**
+
+```markdown
+Act as the Principal AI Zero-Knowledge Architect and Security Diagnostics Engineer.
+I want to equip this workspace with the <RT>/<DDW-X> Zero-Knowledge Master Skills & RAG Infrastructure.
+
+Task Instructions:
+1. Verify the availability of the Zero-Knowledge database at `D-csR_Index/zk_private_rag.db` (ensure `zk_private_rag.rar` is unrarred).
+2. Inspect the Master Skills in `.agents/skills/` and `Skills-CS/`.
+3. When tasked with sensitive security auditing, vulnerability triage, or code inspections, operate as an Elite Blind Orchestrator:
+   - Formulate targeted BM25 search queries and execute `python src/core/rag/zk_semantic_router.py --query "<search terms>"`.
+   - Receive the mathematical UUID tags (e.g. `TAG-0x101`, `TAG-0x102`).
+   - Execute `python src/core/rag/zk_payload_compiler.py --tags <TAGS> --output Secure_Output_Workspace.md` to reconstitute verified diagnostic data directly to local disk.
+4. Maintain 100% data privacy: NEVER copy un-vetted raw dataset text directly into the AI conversation context window.
+```
 
 ---
 
@@ -765,6 +787,7 @@ When interacting with an agent equipped with `<RT>/<DDW-X>` Master Skills, the e
    Payload is compiled to disk without passing raw sensitive data through external AI inference endpoints.
 ```
 
+---
 ## <img src="assets/icons/directory.svg" width="20" height="20" align="absmiddle" alt="directory" /> Ultimate Skill Directory & Use-Case Guide
 
 Explore the granular philosophy, prompt internals, and primary IDE triggers for every skill in the knowledge base:
