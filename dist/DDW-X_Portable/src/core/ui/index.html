@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DDW-X COMMAND & CONTROL (C2)</title>
+    <!-- Technical & Sans Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #09090b;
+            --bg-sidebar: #0c0d12;
+            --bg-card: rgba(18, 20, 29, 0.7);
+            --border-dim: #27272a;
+            --border-active: #38bdf8;
+            --neon-cyan: #38bdf8;
+            --neon-green: #22c55e;
+            --neon-purple: #a855f7;
+            --neon-amber: #f59e0b;
+            --neon-red: #ef4444;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --text-dim: #71717a;
+            --font-mono: 'Fira Code', monospace;
+            --font-sans: 'Inter', sans-serif;
+            --blur: blur(16px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 40%),
+                radial-gradient(at 100% 0%, rgba(168, 85, 247, 0.08) 0px, transparent 40%),
+                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 32px 32px, 32px 32px;
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Top HUD Navigation Bar */
+        .hud-header {
+            height: 56px;
+            border-bottom: 1px solid var(--border-dim);
+            background: rgba(9, 9, 11, 0.85);
+            backdrop-filter: var(--blur);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 50;
+        }
+
+        .hud-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .hud-brand-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-purple));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: #09090b;
+            font-size: 16px;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.4);
+        }
+
+        .hud-brand-text h1 {
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-family: var(--font-mono);
+            color: #ffffff;
+        }
+
+        .hud-brand-text span {
+            font-size: 10px;
+            color: var(--neon-cyan);
+            font-family: var(--font-mono);
+            letter-spacing: 1px;
+        }
+
+        .hud-status-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hud-pill {
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-family: var(--font-mono);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid var(--border-dim);
+        }
+
+        .pulse-beacon {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            box-shadow: 0 0 8px var(--neon-green);
+            animation: pulse-beacon 2s infinite;
+        }
+
+        @keyframes pulse-beacon {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.3); }
+        }
+
+        /* App Layout Container */
+        .app-body {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            width: 240px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border-dim);
+            display: flex;
+            flex-direction: column;
+            padding: 16px 12px;
+            gap: 6px;
+            overflow-y: auto;
+        }
+
+        .sidebar-heading {
+            font-size: 10px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            padding: 8px 12px 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            background: transparent;
+            border: 1px solid transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .nav-btn:hover {
+            background: rgba(39, 39, 42, 0.6);
+            color: #fff;
+            border-color: var(--border-dim);
+        }
+
+        .nav-btn.active {
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--neon-cyan);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.15);
+        }
+
+        .nav-btn .icon {
+            font-size: 14px;
+            width: 18px;
+            text-align: center;
+        }
+
+        /* Main Dynamic Workspace Area */
+        .workspace {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            background: rgba(9, 9, 11, 0.4);
+        }
+
+        .content-scroll {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        /* Glass Panel */
+        .c2-card {
+            background: var(--bg-card);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--border-dim);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .c2-card:hover {
+            border-color: rgba(56, 189, 248, 0.3);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(39, 39, 42, 0.6);
+        }
+
+        .card-header h2 {
+            font-size: 14px;
+            font-family: var(--font-mono);
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-header .badge-tag {
+            font-size: 10px;
+            color: var(--neon-cyan);
+            font-family: var(--font-mono);
+            background: rgba(56, 189, 248, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.25);
+        }
+
+        /* Bento Metrics Grid */
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .bento-stat {
+            background: rgba(18, 20, 29, 0.85);
+            border: 1px solid var(--border-dim);
+            border-radius: 10px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+        }
+
+        .bento-stat::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--stat-color, var(--neon-cyan));
+        }
+
+        .bento-title {
+            font-size: 11px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+        }
+
+        .bento-number {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: #fff;
+        }
+
+        .bento-sub {
+            font-size: 11px;
+            color: var(--neon-green);
+            font-family: var(--font-mono);
+        }
+
+        /* Form Controls */
+        .c2-input, .c2-textarea {
+            width: 100%;
+            background: rgba(12, 13, 18, 0.9);
+            border: 1px solid var(--border-dim);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .c2-input:focus, .c2-textarea:focus {
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.25);
+        }
+
+        .c2-btn {
+            background: linear-gradient(135deg, #0284c7, #6366f1);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .c2-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(2, 132, 199, 0.5);
+        }
+
+        .c2-btn.secondary {
+            background: rgba(39, 39, 42, 0.8);
+            border: 1px solid var(--border-dim);
+        }
+
+        .c2-btn.secondary:hover {
+            border-color: var(--neon-cyan);
+        }
+
+        /* Dense Data Tables */
+        .c2-table-wrapper {
+            overflow-x: auto;
+            border-radius: 8px;
+            border: 1px solid var(--border-dim);
+        }
+
+        .c2-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            text-align: left;
+        }
+
+        .c2-table th {
+            background: rgba(24, 24, 27, 0.9);
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            border-bottom: 1px solid var(--border-dim);
+            text-transform: uppercase;
+            font-size: 10px;
+        }
+
+        .c2-table td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(39, 39, 42, 0.4);
+            color: #e4e4e7;
+        }
+
+        .c2-table tr:hover td {
+            background: rgba(56, 189, 248, 0.04);
+        }
+
+        /* Persistent Terminal Console (Bottom) */
+        .terminal-panel {
+            height: 180px;
+            border-top: 1px solid var(--border-dim);
+            background: rgba(9, 9, 11, 0.95);
+            backdrop-filter: var(--blur);
+            display: flex;
+            flex-direction: column;
+            z-index: 40;
+        }
+
+        .terminal-header {
+            padding: 6px 16px;
+            background: rgba(18, 20, 29, 0.9);
+            border-bottom: 1px solid var(--border-dim);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .terminal-logs {
+            flex: 1;
+            padding: 12px 16px;
+            overflow-y: auto;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: #a1a1aa;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .log-entry { display: flex; gap: 10px; }
+        .log-time { color: var(--text-dim); }
+        .log-tag { color: var(--neon-cyan); font-weight: 600; }
+        .log-msg { color: #f4f4f5; }
+        .log-success { color: var(--neon-green); }
+        .log-error { color: var(--neon-red); }
+
+        /* View Container Switching */
+        .tab-view { display: none; }
+        .tab-view.active { display: block; animation: fadeIn 0.2s ease-in-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(4px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HUD Header -->
+    <header class="hud-header">
+        <div class="hud-brand">
+            <div class="hud-brand-logo">C2</div>
+            <div class="hud-brand-text">
+                <h1>DDW-X COMMAND & CONTROL</h1>
+                <span>ZERO-KNOWLEDGE SECURITY & DATA FORENSICS</span>
+            </div>
+        </div>
+        <div class="hud-status-group">
+            <div class="hud-pill">
+                <div class="pulse-beacon"></div>
+                <span id="c2-status">CORE C2 ONLINE</span>
+            </div>
+            <div class="hud-pill">
+                <span>PORT: 8080</span>
+            </div>
+            <div class="hud-pill">
+                <span id="hud-clock">00:00:00 UTC</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- App Body -->
+    <div class="app-body">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-heading">Navigation Matrix</div>
+            <button class="nav-btn active" onclick="switchTab('telemetry')"><span class="icon">📊</span> Telemetry Hub</button>
+            <button class="nav-btn" onclick="switchTab('hunter')"><span class="icon">⚡</span> RRF Hunter</button>
+            <button class="nav-btn" onclick="switchTab('firewall')"><span class="icon">🛡️</span> Cognitive Firewall</button>
+            <button class="nav-btn" onclick="switchTab('forge')"><span class="icon">🔬</span> Secure Diagnostic Forge</button>
+            <button class="nav-btn" onclick="switchTab('blackboard')"><span class="icon">🧠</span> Swarm Blackboard</button>
+            <button class="nav-btn" onclick="switchTab('topology')"><span class="icon">🕸️</span> Threat Topology</button>
+            <button class="nav-btn" onclick="switchTab('auditor')"><span class="icon">🔍</span> System Auditor</button>
+        </aside>
+
+        <!-- Dynamic Content Workspace -->
+        <main class="workspace">
+            <div class="content-scroll">
+
+                <!-- [1] TELEMETRY HUB VIEW -->
+                <div id="view-telemetry" class="tab-view active">
+                    <div class="bento-grid">
+                        <div class="bento-stat" style="--stat-color: var(--neon-cyan);">
+                            <div class="bento-title">Knowledge Chunks</div>
+                            <div class="bento-number" id="t-chunks">50,614</div>
+                            <div class="bento-sub">FTS5 Inverted Parity: 100%</div>
+                        </div>
+                        <div class="bento-stat" style="--stat-color: var(--neon-green);">
+                            <div class="bento-title">Cryptographic Tags</div>
+                            <div class="bento-number" id="t-tags">50,687</div>
+                            <div class="bento-sub">Air-Gapped Zero Plaintext</div>
+                        </div>
+                        <div class="bento-stat" style="--stat-color: var(--neon-purple);">
+                            <div class="bento-title">Threat IOCs</div>
+                            <div class="bento-number" id="t-iocs">32</div>
+                            <div class="bento-sub">Relational Graph Nodes</div>
+                        </div>
+                        <div class="bento-stat" style="--stat-color: var(--neon-amber);">
+                            <div class="bento-title">Active Swarm Tasks</div>
+                            <div class="bento-number" id="t-swarm">5</div>
+                            <div class="bento-sub">ChaCha20 State Bus Active</div>
+                        </div>
+                    </div>
+
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>💾</span> Database & Core Engine Telemetry</h2>
+                            <span class="badge-tag">SQLite WAL Mode</span>
+                        </div>
+                        <table class="c2-table">
+                            <tbody>
+                                <tr><th>Database File</th><td id="t-dbname">zk_private_rag.db</td><th>Database Size</th><td id="t-dbsize">470.95 MB</td></tr>
+                                <tr><th>Indexed Documents</th><td id="t-docs">49 Files</td><th>FTS5 Synchronized</th><td id="t-fts">50,614 Chunks</td></tr>
+                                <tr><th>Cognitive Vault Status</th><td>PROTECTED (5 Mappings)</td><th>Integrity State</th><td style="color: var(--neon-green);">OPTIMAL</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- [2] RRF HUNTER VIEW -->
+                <div id="view-hunter" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>⚡</span> Multi-Query Reciprocal Rank Fusion (RRF) Hunter</h2>
+                            <span class="badge-tag">k=60 Fusion</span>
+                        </div>
+                        <div style="display: flex; gap: 12px; margin-bottom: 16px;">
+                            <input type="text" id="hunter-input" class="c2-input" placeholder="Enter query: e.g. AST security linters, Sysmon EID 10, or kernel driver IOCTLs..." value="AST security linters and parameterized queries">
+                            <button class="c2-btn" onclick="executeHunterSearch()">HUNT</button>
+                        </div>
+                        <div id="hunter-results" style="display: flex; flex-direction: column; gap: 10px;">
+                            <div style="color: var(--text-dim); font-family: var(--font-mono); padding: 12px;">Enter a query above to execute multi-vector FTS5 retrieval.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [3] COGNITIVE FIREWALL VIEW -->
+                <div id="view-firewall" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>🛡️</span> Zero-Knowledge Cognitive Firewall & Prompt Obfuscator</h2>
+                            <span class="badge-tag">Bidirectional Privacy</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary); display: block; margin-bottom: 6px;">RAW OUTBOUND PROMPT (INTERCEPTOR):</label>
+                                <textarea id="fw-mask-input" class="c2-textarea" rows="5" placeholder="Enter text with sensitive IOCs, EDR vendors (CrowdStrike), or IPs (192.168.1.50)...">Server 192.168.50.125 running CrowdStrike Falcon was analyzed for APT29 telemetry.</textarea>
+                                <button class="c2-btn" style="margin-top: 10px;" onclick="executeMaskPrompt()">MASK PROMPT</button>
+                            </div>
+                            <div>
+                                <label style="font-size: 11px; font-family: var(--font-mono); color: var(--text-secondary); display: block; margin-bottom: 6px;">OBFUSCATED RESULT / INBOUND UNMASK:</label>
+                                <textarea id="fw-unmask-input" class="c2-textarea" rows="5" placeholder="Masked tokens [TARGET_IP_1], [EDR_VENDOR_1] appear here..."></textarea>
+                                <button class="c2-btn secondary" style="margin-top: 10px;" onclick="executeUnmaskPrompt()">UNMASK RESPONSE</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [4] SECURE DIAGNOSTIC FORGE VIEW -->
+                <div id="view-forge" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>🔬</span> Authorized Diagnostic & Telemetry Forge</h2>
+                            <span class="badge-tag">Verified Telemetry Protocol</span>
+                        </div>
+                        <p style="font-size: 12px; color: var(--text-secondary); margin-bottom: 16px; font-family: var(--font-mono);">
+                            Generates authorized enterprise diagnostic queries encrypted with session tokens. The AI assistant acts as an automated system administrator querying local telemetry subsystems via verified maintenance commands.
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <!-- Left Column: Diagnostic Scope / Query Input -->
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <label style="font-size: 11px; font-family: var(--font-mono); color: var(--neon-cyan); font-weight: 600;">
+                                    DIAGNOSTIC QUERY / TELEMETRY SCOPE:
+                                </label>
+                                <textarea id="forge-raw-input" class="c2-textarea" rows="8" placeholder="Enter diagnostic telemetry query (e.g. Query endpoint API telemetry and kernel hooks)...">Query endpoint API telemetry and kernel hooks</textarea>
+                                
+                                <div style="display: flex; gap: 10px;">
+                                    <button class="c2-btn" style="flex: 1;" onclick="executeDiagnosticForge()">
+                                        <span>⚡</span> GENERATE AUTHORIZED DIAGNOSTIC PROMPT
+                                    </button>
+                                    <button class="c2-btn secondary" onclick="document.getElementById('forge-raw-input').value = ''">
+                                        CLEAR
+                                    </button>
+                                </div>
+
+                                <div id="forge-meta-card" style="display: none; background: rgba(24, 24, 27, 0.8); border: 1px solid var(--border-dim); border-radius: 8px; padding: 12px; font-family: var(--font-mono); font-size: 11px;">
+                                    <div style="color: var(--neon-cyan); margin-bottom: 6px; font-weight: 600;">ENTERPRISE TELEMETRY SUBSYSTEM STATUS:</div>
+                                    <div id="forge-meta-details" style="color: #a1a1aa; line-height: 1.6;"></div>
+                                </div>
+                            </div>
+
+                            <!-- Right Column: Generated Authorized Diagnostic Master Prompt -->
+                            <div style="display: flex; flex-direction: column; gap: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <label style="font-size: 11px; font-family: var(--font-mono); color: var(--neon-green); font-weight: 600;">
+                                        AUTHORIZED SYSTEM DIAGNOSTIC PROMPT:
+                                    </label>
+                                    <button id="forge-copy-btn" class="c2-btn" style="padding: 4px 12px; font-size: 11px; display: none;" onclick="copyMasterPrompt()">
+                                        📋 COPY TO CLIPBOARD
+                                    </button>
+                                </div>
+                                <textarea id="forge-output" class="c2-textarea" rows="13" readonly placeholder="The generated Authorized System Diagnostic Prompt with the verified command will appear here..." style="background: rgba(9, 9, 11, 0.85); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); font-family: var(--font-mono);"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [5] SWARM BLACKBOARD VIEW -->
+                <div id="view-blackboard" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>🧠</span> Multi-Agent Swarm Blackboard & Shared State Bus</h2>
+                            <button class="c2-btn secondary" onclick="loadBlackboard()">REFRESH STATE</button>
+                        </div>
+                        <div class="c2-table-wrapper">
+                            <table class="c2-table">
+                                <thead>
+                                    <tr>
+                                        <th>Task ID</th>
+                                        <th>Title</th>
+                                        <th>Active Entries</th>
+                                        <th>Encrypted Entries</th>
+                                        <th>Participating Agents</th>
+                                        <th>Last Updated</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="bb-table-body">
+                                    <tr><td colspan="6" style="text-align: center; color: var(--text-dim);">Loading Swarm Tasks...</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [6] THREAT TOPOLOGY VIEW -->
+                <div id="view-topology" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>🕸️</span> Relational Threat Topology & IOC Entity Graph</h2>
+                            <button class="c2-btn secondary" onclick="loadTopologyGraph()">RELOAD GRAPH</button>
+                        </div>
+                        <div id="topology-graph-container" style="max-height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 12px;">
+                            <!-- Populated dynamically -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- [7] SYSTEM AUDITOR VIEW -->
+                <div id="view-auditor" class="tab-view">
+                    <div class="c2-card">
+                        <div class="card-header">
+                            <h2><span>🔍</span> Deep ZK-RAG Integrity Auditor & Privacy Verification</h2>
+                            <button class="c2-btn" onclick="executeAuditRun()">TRIGGER DEEP AUDIT</button>
+                        </div>
+                        <div id="audit-results" style="font-family: var(--font-mono); font-size: 12px; color: var(--text-secondary);">
+                            Click "Trigger Deep Audit" to verify PRAGMA checks, FTS5 sync, topology drift, and zero-plaintext assertion.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Persistent Terminal Console -->
+            <div class="terminal-panel">
+                <div class="terminal-header">
+                    <span>LIVE C2 COMMAND LOG STREAM</span>
+                    <span style="color: var(--neon-cyan); cursor: pointer;" onclick="document.getElementById('terminal-log-stream').innerHTML = ''">CLEAR CONSOLE</span>
+                </div>
+                <div class="terminal-logs" id="terminal-log-stream">
+                    <div class="log-entry"><span class="log-time">[00:00:00]</span> <span class="log-tag">[SYSTEM]</span> <span class="log-msg">DDW-X Command & Control Console initialized. Air-gap integrity secured.</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function log(tag, msg, isError = false, isSuccess = false) {
+            const stream = document.getElementById('terminal-log-stream');
+            const now = new Date().toTimeString().split(' ')[0];
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            let colorClass = 'log-msg';
+            if (isError) colorClass = 'log-error';
+            if (isSuccess) colorClass = 'log-success';
+            div.innerHTML = `<span class="log-time">[${now}]</span> <span class="log-tag">[${tag}]</span> <span class="${colorClass}">${msg}</span>`;
+            stream.appendChild(div);
+            stream.scrollTop = stream.scrollHeight;
+        }
+
+        function updateClock() {
+            const now = new Date().toUTCString().split(' ')[4];
+            document.getElementById('hud-clock').innerText = now + ' UTC';
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            
+            const targetView = document.getElementById(`view-${tabId}`);
+            if (targetView) targetView.classList.add('active');
+            
+            event.currentTarget.classList.add('active');
+            log("NAV", `Switched view to: ${tabId.toUpperCase()}`);
+
+            if (tabId === 'blackboard') loadBlackboard();
+            if (tabId === 'topology') loadTopologyGraph();
+        }
+
+        async function fetchStatus() {
+            try {
+                const res = await fetch('/api/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('t-chunks').innerText = Number(data.database.total_chunks).toLocaleString();
+                    document.getElementById('t-tags').innerText = Number(data.topology.mapped_tags).toLocaleString();
+                    document.getElementById('t-iocs').innerText = Number(data.database.total_threat_iocs).toLocaleString();
+                    document.getElementById('t-swarm').innerText = data.swarm_blackboard.active_tasks;
+                    document.getElementById('t-dbname').innerText = data.database.file_name;
+                    document.getElementById('t-dbsize').innerText = data.database.file_size_mb + ' MB';
+                    document.getElementById('t-docs').innerText = data.database.total_documents + ' Files';
+                    document.getElementById('t-fts').innerText = Number(data.database.total_fts_indexed).toLocaleString() + ' Chunks';
+                    log("STATUS", `Telemetry synchronized (Chunks: ${data.database.total_chunks}, IOCs: ${data.database.total_threat_iocs})`, false, true);
+                }
+            } catch (err) {
+                log("STATUS", `Telemetry sync error: ${err}`, true);
+            }
+        }
+
+        async function executeHunterSearch() {
+            const q = document.getElementById('hunter-input').value.trim();
+            if (!q) return;
+            log("HUNT", `Executing Multi-Query RRF Search: "${q}"`);
+            const container = document.getElementById('hunter-results');
+            container.innerHTML = '<div style="color: var(--neon-cyan); padding: 8px;">Searching FTS5 Inverted Index...</div>';
+            try {
+                const res = await fetch(`/api/search?q=${encodeURIComponent(q)}&top_k=5`);
+                if (res.ok) {
+                    const data = await res.json();
+                    container.innerHTML = '';
+                    if (!data.results || data.results.length === 0) {
+                        container.innerHTML = '<div style="color: var(--text-dim); padding: 8px;">No matching cryptographic tags found.</div>';
+                        return;
+                    }
+                    data.results.forEach(r => {
+                        const row = document.createElement('div');
+                        row.style.background = 'rgba(24, 24, 27, 0.8)';
+                        row.style.border = '1px solid var(--border-dim)';
+                        row.style.borderRadius = '8px';
+                        row.style.padding = '12px';
+                        row.innerHTML = `
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                                <span style="color: var(--neon-cyan); font-weight: 600;">${r.tag}</span>
+                                <span style="color: var(--neon-green); font-size: 11px;">${r.confidence_pct}% Match (Score: ${r.score})</span>
+                            </div>
+                            <div style="font-size: 12px; color: #d4d4d8;">${r.preview}</div>
+                        `;
+                        container.appendChild(row);
+                    });
+                    log("HUNT", `Search returned ${data.total_results} tags in ${data.latency_ms} ms`, false, true);
+                }
+            } catch (e) {
+                log("HUNT", `Search failed: ${e}`, true);
+            }
+        }
+
+        async function executeMaskPrompt() {
+            const p = document.getElementById('fw-mask-input').value.trim();
+            if (!p) return;
+            log("FIREWALL", `Masking sensitive prompt entities...`);
+            try {
+                const res = await fetch('/api/firewall/mask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: p })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('fw-unmask-input').value = data.masked;
+                    log("FIREWALL", `Prompt masked successfully. Mappings generated: ${data.report ? data.report.total_tokens_masked : 0}`, false, true);
+                }
+            } catch (e) {
+                log("FIREWALL", `Masking error: ${e}`, true);
+            }
+        }
+
+        async function executeUnmaskPrompt() {
+            const t = document.getElementById('fw-unmask-input').value.trim();
+            if (!t) return;
+            log("FIREWALL", `Unmasking abstract tokens...`);
+            try {
+                const res = await fetch('/api/firewall/unmask', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: t })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('fw-mask-input').value = data.unmasked;
+                    log("FIREWALL", `Reverse translation completed. Tokens restored: ${data.tokens_restored}`, false, true);
+                }
+            } catch (e) {
+                log("FIREWALL", `Unmasking error: ${e}`, true);
+            }
+        }
+
+        async function executeDiagnosticForge() {
+            const raw = document.getElementById('forge-raw-input').value.trim();
+            if (!raw) return;
+            log("DIAGNOSTIC", `Generating authorized telemetry diagnostic token...`);
+            const outBox = document.getElementById('forge-output');
+            outBox.value = "Encrypting telemetry session token with local enclave key...";
+            try {
+                const res = await fetch('/api/diagnostic/seal', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ intent: raw })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    outBox.value = data.master_prompt;
+                    document.getElementById('forge-copy-btn').style.display = 'inline-block';
+                    
+                    const metaCard = document.getElementById('forge-meta-card');
+                    const metaDetails = document.getElementById('forge-meta-details');
+                    metaCard.style.display = 'block';
+                    
+                    metaDetails.innerHTML = `
+                        <div>• <strong>Protocol:</strong> <span style="color: var(--neon-purple);">Authorized Diagnostic Telemetry (Encrypted Session Token)</span></div>
+                        <div>• <strong>Session Token:</strong> <span style="color: var(--neon-cyan); word-break: break-all;">${data.token}</span></div>
+                        <div>• <strong>Diagnostic Command:</strong> <span style="color: var(--neon-green);">${data.command}</span></div>
+                        <div>• <strong>Generation Latency:</strong> ${data.latency_ms} ms</div>
+                    `;
+                    log("DIAGNOSTIC", `Authorized Diagnostic Prompt generated in ${data.latency_ms} ms.`, false, true);
+                }
+            } catch (e) {
+                log("DIAGNOSTIC", `Diagnostic generation error: ${e}`, true);
+                outBox.value = "Error generating diagnostic prompt: " + e;
+            }
+        }
+        const executeBlindCourierSeal = executeDiagnosticForge;
+
+        async function executeForgePrompt() {
+            const raw = document.getElementById('forge-raw-input').value.trim();
+            if (!raw) return;
+            log("FORGE", `Synthesizing Tokenized Pointer Prompt for: "${raw.substring(0, 45)}..."`);
+            const outBox = document.getElementById('forge-output');
+            outBox.value = "Executing Cognitive Firewall Tokenization & Hybrid Index Tag Resolution...";
+            try {
+                const res = await fetch('/api/forge/prompt', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ intent: raw })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    outBox.value = data.master_prompt;
+                    document.getElementById('forge-copy-btn').style.display = 'inline-block';
+                    
+                    const metaCard = document.getElementById('forge-meta-card');
+                    const metaDetails = document.getElementById('forge-meta-details');
+                    metaCard.style.display = 'block';
+                    
+                    const tagStr = data.tags && data.tags.length ? data.tags.join(', ') : 'None';
+                    const subCount = data.substitutions ? data.substitutions.length : 0;
+                    
+                    metaDetails.innerHTML = `
+                        <div>• <strong>Authoritative TAGs:</strong> <span style="color: var(--neon-cyan);">${tagStr}</span></div>
+                        <div>• <strong>Masked Entities:</strong> <span style="color: var(--neon-green);">${subCount} tokens isolated</span></div>
+                        <div>• <strong>Master Directive Words:</strong> ${data.token_count || 0} tokens</div>
+                        <div>• <strong>Forge Latency:</strong> ${data.latency_ms} ms</div>
+                    `;
+                    log("FORGE", `Master Prompt forged in ${data.latency_ms} ms with ${data.tags.length} TAG pointers.`, false, true);
+                }
+            } catch (e) {
+                log("FORGE", `Prompt forge error: ${e}`, true);
+                outBox.value = "Error forging prompt: " + e;
+            }
+        }
+
+        function copyMasterPrompt() {
+            const outBox = document.getElementById('forge-output');
+            if (!outBox.value) return;
+            navigator.clipboard.writeText(outBox.value).then(() => {
+                const btn = document.getElementById('forge-copy-btn');
+                const origText = btn.innerHTML;
+                btn.innerHTML = '✅ COPIED!';
+                btn.style.borderColor = 'var(--neon-green)';
+                setTimeout(() => {
+                    btn.innerHTML = origText;
+                    btn.style.borderColor = '';
+                }, 2000);
+                log("FORGE", `Master Prompt copied to clipboard!`, false, true);
+            }).catch(err => {
+                log("FORGE", `Clipboard copy failed: ${err}`, true);
+            });
+        }
+
+        async function loadBlackboard() {
+            log("SWARM", `Fetching active blackboard task matrix...`);
+            const tbody = document.getElementById('bb-table-body');
+            try {
+                const res = await fetch('/api/blackboard/list');
+                if (res.ok) {
+                    const tasks = await res.json();
+                    tbody.innerHTML = '';
+                    if (!tasks || tasks.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" style="text-align: center; color: var(--text-dim);">No active tasks in blackboard.</td></tr>';
+                        return;
+                    }
+                    tasks.forEach(t => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="color: var(--neon-cyan); font-weight: 600;">${t.task_id}</td>
+                            <td>${t.title}</td>
+                            <td>${t.entry_count}</td>
+                            <td><span style="color: ${t.encrypted_count > 0 ? 'var(--neon-green)' : 'var(--text-dim)'};">${t.encrypted_count} Encrypted</span></td>
+                            <td>${t.agents.join(', ') || 'None'}</td>
+                            <td>${t.updated_at}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                    log("SWARM", `Loaded ${tasks.length} active swarm tasks`, false, true);
+                }
+            } catch (e) {
+                log("SWARM", `Blackboard fetch failed: ${e}`, true);
+            }
+        }
+
+        async function loadTopologyGraph() {
+            log("GRAPH", `Rendering relational threat graph edges...`);
+            const container = document.getElementById('topology-graph-container');
+            try {
+                const res = await fetch('/api/graph');
+                if (res.ok) {
+                    const data = await res.json();
+                    container.innerHTML = '';
+                    if (!data.edges || data.edges.length === 0) {
+                        container.innerHTML = '<div style="color: var(--text-dim); padding: 8px;">No relational edges available.</div>';
+                        return;
+                    }
+                    data.edges.forEach(e => {
+                        const d = document.createElement('div');
+                        d.style.padding = '8px 12px';
+                        d.style.background = 'rgba(24, 24, 27, 0.6)';
+                        d.style.borderRadius = '6px';
+                        d.style.borderLeft = '3px solid var(--neon-purple)';
+                        d.innerHTML = `<span style="color: var(--neon-cyan);">${e.source}</span> <span style="color: var(--text-dim);">──[${e.relation}]──►</span> <span style="color: var(--neon-green);">${e.target}</span>`;
+                        container.appendChild(d);
+                    });
+                    log("GRAPH", `Loaded ${data.edges.length} relational graph edges`, false, true);
+                }
+            } catch (e) {
+                log("GRAPH", `Topology load failed: ${e}`, true);
+            }
+        }
+
+        async function executeAuditRun() {
+            log("AUDITOR", `Initiating Deep ZK-RAG PRAGMA & Privacy Leak Audit...`);
+            const resBox = document.getElementById('audit-results');
+            resBox.innerHTML = '<div style="color: var(--neon-cyan); padding: 8px;">Running PRAGMA integrity_check, FTS5 sync, and topology drift validation...</div>';
+            try {
+                const res = await fetch('/api/audit/run', { method: 'POST' });
+                if (res.ok) {
+                    const data = await res.json();
+                    resBox.innerHTML = `
+                        <div style="margin-bottom: 12px; font-weight: 600; color: ${data.overall_status === 'OPTIMAL' ? 'var(--neon-green)' : 'var(--neon-amber)'};">
+                            OVERALL AUDIT STATUS: ${data.overall_status} (${data.passed}/${data.total} Passed)
+                        </div>
+                    `;
+                    data.checks.forEach(c => {
+                        const d = document.createElement('div');
+                        d.style.padding = '6px 0';
+                        d.style.borderBottom = '1px solid rgba(39, 39, 42, 0.4)';
+                        d.innerHTML = `<span style="color: ${c.passed ? 'var(--neon-green)' : 'var(--neon-red)'};">[${c.passed ? 'PASS' : 'FAIL'}]</span> <strong>${c.name}</strong> (${c.category})`;
+                        resBox.appendChild(d);
+                    });
+                    log("AUDITOR", `Audit completed: ${data.overall_status} (${data.passed}/${data.total} checks passed)`, false, true);
+                }
+            } catch (e) {
+                log("AUDITOR", `Audit execution failed: ${e}`, true);
+            }
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            fetchStatus();
+            setInterval(fetchStatus, 8000);
+        });
+    </script>
+</body>
+</html>

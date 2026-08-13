@@ -1,0 +1,15 @@
+{
+  "fbom_version": "1.0-ddwx",
+  "artifact_name": "dummy_test_watermarked.exe",
+  "artifact_path": "C:\\Users\\sorena\\Desktop\\ddw-x clone\\skillssssssssssssssssssssssss\\scratch\\dummy_test_watermarked.exe",
+  "artifact_sha256": "76fbe57866d174e86d6cfe65d129eebed73d5769ea7939a367f4e2d150086a18",
+  "artifact_size_bytes": 47,
+  "source_file": "dummy_test_watermarked.c",
+  "source_sha256": "980a01372f806982772af78f02d4dfbff9f7e9c20b1cbe027b573002aa8c7272",
+  "target_architecture": "X64",
+  "target_format": "EXE",
+  "compiler": "None (Fallback Lexical Linter)",
+  "compiler_flags": [],
+  "compilation_timestamp": 1786568960.7236676,
+  "compilation_time_utc": "Thu Aug 13 00:39:20 2026"
+}

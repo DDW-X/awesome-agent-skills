@@ -1,0 +1,13 @@
+title: Suspicious Driver Load IOCTL Detection
+id: f1a2b3c4-d5e6-7f8a-9b0c-1d2e3f4a5b6c
+status: test
+description: Detects kernel driver communication attempting unhooking routines
+logsource:
+    category: driver_load
+    product: windows
+detection:
+    selection:
+        ImageLoaded|endswith: '.sys'
+        Hashes|contains: 'IMPHASH'
+    condition: selection
+level: high

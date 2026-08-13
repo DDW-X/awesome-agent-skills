@@ -1,0 +1,17 @@
+{
+  "fbom_version": "1.0-ddwx",
+  "build_status": "SUCCESS",
+  "error_detail": null,
+  "artifact_name": "telemetry.exe",
+  "artifact_path": "C:\\Users\\sorena\\Desktop\\ddw-x clone\\skillssssssssssssssssssssssss\\scratch\\telemetry.exe",
+  "artifact_sha256": "76fbe57866d174e86d6cfe65d129eebed73d5769ea7939a367f4e2d150086a18",
+  "artifact_size_bytes": 47,
+  "source_file": "mutated_telemetry.c",
+  "source_sha256": "77d9f4c5b4fc8276a94d0280d66a9ea7d5c4ba2fe18a48e159c2aa5907500157",
+  "target_architecture": "X64",
+  "target_format": "EXE",
+  "compiler": "None (Fallback Lexical Linter)",
+  "compiler_flags": [],
+  "compilation_timestamp": 1786586864.1680276,
+  "compilation_time_utc": "Thu Aug 13 05:37:44 2026"
+}

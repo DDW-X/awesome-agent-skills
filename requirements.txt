@@ -1,0 +1,16 @@
+# DDW-X Standard Production Dependencies
+# Zero-Knowledge Threat Intelligence & C2 Architecture
+
+# Core Cryptography
+cryptography>=42.0.0
+
+# HTTP & REST Networking
+requests>=2.31.0
+urllib3>=2.2.0
+
+# Optional High-Performance ASGI API Stack (Fallback to Python stdlib Threaded HTTP)
+fastapi>=0.110.0
+uvicorn>=0.29.0
+
+# SQLite / Database extensions (Python standard library provides sqlite3)
+# Platform compatibility: Windows x86_64, Linux x86_64, macOS Apple Silicon

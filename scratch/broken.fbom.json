@@ -1,0 +1,17 @@
+{
+  "fbom_version": "1.0-ddwx",
+  "build_status": "FAILED",
+  "error_detail": "Unbalanced parentheses: 2 open vs 1 close; Line 2: Missing statement terminator ';' -> 'printf(\"missing semicolon and broken parenthesis\"'",
+  "artifact_name": "broken.exe",
+  "artifact_path": "C:\\Users\\sorena\\Desktop\\ddw-x clone\\skillssssssssssssssssssssssss\\scratch\\broken.exe",
+  "artifact_sha256": "N/A (COMPILATION_FAILED)",
+  "artifact_size_bytes": 0,
+  "source_file": "broken.c",
+  "source_sha256": "55101480680d231dff7f86f4739600f5909a63ad8ae6a932a4abb5faf07d153e",
+  "target_architecture": "X64",
+  "target_format": "EXE",
+  "compiler": "None (Fallback Lexical Linter)",
+  "compiler_flags": [],
+  "compilation_timestamp": 1786569925.1267154,
+  "compilation_time_utc": "Thu Aug 13 00:55:25 2026"
+}

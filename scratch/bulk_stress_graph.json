@@ -1,0 +1,30 @@
+{
+  "version": "3.0-relational-graph",
+  "generated_at": 1786569970.6045315,
+  "target_dir": "C:\\Users\\sorena\\Desktop\\ddw-x clone\\skillssssssssssssssssssssssss\\scratch\\bulk_stress",
+  "total_edges": 4,
+  "edges": [
+    {
+      "source": "doc:binary_junk.txt",
+      "target": "chunk:TAG-8F18-EE",
+      "relation": "CONTAINS_CHUNK"
+    },
+    {
+      "source": "doc:valid_intel.md",
+      "target": "chunk:TAG-651A-26",
+      "relation": "CONTAINS_CHUNK"
+    },
+    {
+      "source": "chunk:TAG-651A-26",
+      "target": "ioc:IPV4:198.51.100.44",
+      "relation": "EXPOSES_IPV4",
+      "ioc_value": "198.51.100.44"
+    },
+    {
+      "source": "chunk:TAG-651A-26",
+      "target": "ioc:SHA256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "relation": "EXPOSES_SHA256",
+      "ioc_value": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

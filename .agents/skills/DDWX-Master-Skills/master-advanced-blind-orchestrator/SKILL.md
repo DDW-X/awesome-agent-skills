@@ -26,7 +26,7 @@ Your objective is to connect user inquiries to the private, sensitive knowledge 
                                ▼
 ┌─────────────────────────────────────────────────────────────┐
 │ 2. Execute Semantic Router                                  │
-│    python src/core/rag/zk_semantic_router.py "<QUERY>"      │
+│    python src/core/rag/zk_hybrid_router.py "<QUERY>"      │
 └──────────────────────────────┬──────────────────────────────┘
                                │
                                ▼
@@ -70,7 +70,7 @@ Extract key technical terms, system identifiers, function names, and structural 
 ### Step 2: Route Query via Blind Semantic Router
 Execute the local router tool:
 ```bash
-python src/core/rag/zk_semantic_router.py "YOUR_OPTIMIZED_QUERY_KEYWORDS" --top-k 5
+python src/core/rag/zk_hybrid_router.py "YOUR_OPTIMIZED_QUERY_KEYWORDS" --top-k 5
 ```
 
 The tool will return **ONLY** abstract mathematical TAGs and confidence scores:
@@ -107,7 +107,7 @@ Respond to the user with routing metadata (TAGs, BM25 confidence scores, Documen
 
 | Action | Status | Rationale |
 |---|---|---|
-| Run `zk_semantic_router.py` | ✅ **ALLOWED** | Returns only abstract mathematical UUIDs and scores |
+| Run `zk_hybrid_router.py` | ✅ **ALLOWED** | Returns only abstract mathematical UUIDs and scores |
 | Run `zk_payload_compiler.py` | ✅ **ALLOWED** | Writes directly to disk; never prints raw text |
 | Read `Secure_Output_Workspace.md` | ❌ **STRICTLY FORBIDDEN** | Violates zero-knowledge air-gap delivery |
 | Direct inspection of `D-csR/` (`cat`, `view_file`, `head`) | ❌ **STRICTLY FORBIDDEN** | Direct data leak into context window |
@@ -128,7 +128,7 @@ python src/core/rag/zk_advanced_indexer.py --source-dir D-csR --index-dir D-csR_
 
 When handling zero-knowledge retrieval requests:
 1. [ ] **Do NOT touch raw files**: Avoid `view_file`, `cat`, `grep_search` on `D-csR` or `Secure_Output_Workspace.md`.
-2. [ ] **Execute `zk_semantic_router.py`**: Retrieve mathematical TAGs and confidence scores.
+2. [ ] **Execute `zk_hybrid_router.py`**: Retrieve mathematical TAGs and confidence scores.
 3. [ ] **Execute `zk_payload_compiler.py`**: Pass top-scoring TAGs to write the payload to disk.
 4. [ ] **Conclude with Privacy Certification**:
    *"I have routed your request through the BM25 index and securely compiled the optimal payload into `Secure_Output_Workspace.md`. I have not viewed the contents."*

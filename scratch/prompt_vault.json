@@ -1,0 +1,32 @@
+{
+  "metadata": {
+    "version": "1.0.0-zk-firewall",
+    "last_updated": 1786586142.093554,
+    "total_mappings": 8
+  },
+  "token_to_value": {
+    "[EDR_VENDOR_1]": "CrowdStrike Falcon",
+    "[THREAT_ACTOR_1]": "APT29",
+    "[TARGET_IP_1]": "192.168.50.125",
+    "[THREAT_ACTOR_2]": "APT28",
+    "[TARGET_IP_2]": "192.168.10.50",
+    "[EDR_VENDOR_2]": "CrowdStrike",
+    "[TARGET_IP_3]": "192.168.1.100",
+    "[TARGET_IP_4]": "192.168.10.45"
+  },
+  "value_to_token": {
+    "CrowdStrike Falcon": "[EDR_VENDOR_1]",
+    "APT29": "[THREAT_ACTOR_1]",
+    "192.168.50.125": "[TARGET_IP_1]",
+    "APT28": "[THREAT_ACTOR_2]",
+    "192.168.10.50": "[TARGET_IP_2]",
+    "CrowdStrike": "[EDR_VENDOR_2]",
+    "192.168.1.100": "[TARGET_IP_3]",
+    "192.168.10.45": "[TARGET_IP_4]"
+  },
+  "tag_counters": {
+    "EDR_VENDOR": 2,
+    "THREAT_ACTOR": 2,
+    "TARGET_IP": 4
+  }
+}

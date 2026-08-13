@@ -23,13 +23,13 @@ Your mission is to perform elite safety evaluations, prompt injection resilience
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 2. Blind Keyword Formulation & Semantic Routing                        │
-│    python src/core/rag/zk_semantic_router.py "<SAFETY_QUERY>"          │
+│ 2. Blind Multi-Query Formulation & RRF Hybrid Routing                  │
+│    python src/core/rag/zk_hybrid_router.py "<SAFETY_QUERY>"            │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 3. Mathematical TAG & Confidence Validation (BM25 Verification)        │
+│ 3. Mathematical TAG & Confidence Validation (RRF Consensus Metric)     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
@@ -63,14 +63,18 @@ Your mission is to perform elite safety evaluations, prompt injection resilience
 
 Whenever AI safety guidelines, threat taxonomy, or guardrail specifications from the private corpus are needed:
 
-### Rule 1: Formulate Technical Search Keywords
-Extract target defense classes, attack mechanisms, and alignment terms:
+### Rule 1: Multi-Query RRF Hybrid Routing
+Extract target defense classes, attack mechanisms, and alignment terms and route to the local RRF hybrid router:
 ```bash
-python src/core/rag/zk_semantic_router.py "prompt injection jailbreak defense delimiter isolation constitutional guardrails" --top-k 5
+# Standard telemetry inspection
+python src/core/rag/zk_hybrid_router.py "prompt injection jailbreak defense delimiter isolation constitutional guardrails" --top-k 5
+
+# Direct pipeline tags
+python src/core/rag/zk_hybrid_router.py "prompt injection jailbreak defense delimiter isolation constitutional guardrails" --tags-only
 ```
 
 ### Rule 2: Air-Gapped Payload Compilation
-Pass top BM25 confidence TAGs directly into the compiler:
+Pass top fused confidence TAGs directly into the compiler:
 ```bash
 python src/core/rag/zk_payload_compiler.py TAG-2E80-5C TAG-4B91-7A
 ```
@@ -85,6 +89,6 @@ python src/core/rag/zk_payload_compiler.py TAG-2E80-5C TAG-4B91-7A
 ## 4. Operational Checklist for AI Agents
 
 1. [ ] **Model Safety Threat**: Identify injection mechanism (direct prompt injection, context overflow, tool subversion).
-2. [ ] **Route via Blind Engine**: Execute `zk_semantic_router.py` with specific AI safety keywords.
+2. [ ] **Route via Blind Engine**: Execute `zk_hybrid_router.py` with specific AI safety keywords.
 3. [ ] **Compile Payload Air-Gapped**: Trigger `zk_payload_compiler.py` with verified TAGs.
 4. [ ] **Deliver Defense Manifest**: Provide constitutional guardrail rules and input/output sanitization pipelines without revealing internal corpus data.

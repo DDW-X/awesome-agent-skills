@@ -23,13 +23,13 @@ Your mission is to perform elite disassembly analysis, decompilation interface o
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 2. Blind Keyword Formulation & Semantic Routing                        │
-│    python src/core/rag/zk_semantic_router.py "<RE_DISSECTION_QUERY>"   │
+│ 2. Blind Multi-Query Formulation & RRF Hybrid Routing                  │
+│    python src/core/rag/zk_hybrid_router.py "<RE_DISSECTION_QUERY>"     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 3. Mathematical TAG & Confidence Validation (BM25 Verification)        │
+│ 3. Mathematical TAG & Confidence Validation (RRF Consensus Metric)     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
@@ -64,14 +64,18 @@ Your mission is to perform elite disassembly analysis, decompilation interface o
 
 Whenever technical disassembly references, signatures, or scripts are requested:
 
-### Rule 1: Formulate Technical Search Keywords
-Extract technical symbols, Ghidra API classes, and header structs:
+### Rule 1: Multi-Query RRF Hybrid Routing
+Extract technical symbols, Ghidra API classes, and header structs and route to the local RRF hybrid router:
 ```bash
-python src/core/rag/zk_semantic_router.py "Ghidra DecompInterface C-AST PE header entropy IAT" --top-k 5
+# Standard telemetry inspection
+python src/core/rag/zk_hybrid_router.py "Ghidra DecompInterface C-AST PE header entropy IAT" --top-k 5
+
+# Direct pipeline tags
+python src/core/rag/zk_hybrid_router.py "Ghidra DecompInterface C-AST PE header entropy IAT" --tags-only
 ```
 
 ### Rule 2: Air-Gapped Payload Compilation
-Pass top BM25 confidence TAGs directly into the compiler:
+Pass top fused confidence TAGs directly into the compiler:
 ```bash
 python src/core/rag/zk_payload_compiler.py TAG-1F8B-4A TAG-3C90-8D
 ```
@@ -86,6 +90,6 @@ python src/core/rag/zk_payload_compiler.py TAG-1F8B-4A TAG-3C90-8D
 ## 4. Operational Checklist for AI Agents
 
 1. [ ] **Identify Binary Spec**: Determine format (PE32/PE64/ELF/Mach-O) and compiler architecture.
-2. [ ] **Route via Blind Engine**: Execute `zk_semantic_router.py` with specific low-level terms.
+2. [ ] **Route via Blind Engine**: Execute `zk_hybrid_router.py` with specific low-level terms.
 3. [ ] **Compile Payload Air-Gapped**: Trigger `zk_payload_compiler.py` with verified TAGs.
 4. [ ] **Deliver Reversing Blueprint**: Provide pseudo-code or Ghidra Python automation scripts without leaking private corpus data.

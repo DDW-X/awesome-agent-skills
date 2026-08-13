@@ -23,7 +23,7 @@ When the user appends the **`++` Modifier** to their request (e.g., *"Use Threat
 ┌────────────────────────────────────────────────────────────────────────┐
 │ PHASE 1: THE OVERRIDE PROTOCOL (Base ZK Execution)                     │
 │ 1. Formulate dense technical search keywords.                          │
-│ 2. Run: python src/core/rag/zk_semantic_router.py "<QUERY>"            │
+│ 2. Run: python src/core/rag/zk_hybrid_router.py "<QUERY>" --tags-only  │
 │ 3. Run: python src/core/rag/zk_payload_compiler.py TAG-1 TAG-2         │
 │ 4. Verified output generated in Secure_Output_Workspace.md.            │
 └───────────────────────────────────┬────────────────────────────────────┘
@@ -48,7 +48,7 @@ When the user appends the **`++` Modifier** to their request (e.g., *"Use Threat
 │ MANDATORY CONCLUSION PROTOCOL                                          │
 │ "I have engaged the '++' Cognitive Bridge, ingested the secure         │
 │  workspace payload, and synthesized the following elite analysis..."   │
-└────────────────────────────────────────────────────────────────────────┘
+│└───────────────────────────────────┬────────────────────────────────────┘
 ```
 
 ---
@@ -65,9 +65,13 @@ This skill automatically activates when:
 
 ### Phase 1: The Override Protocol (Base Zero-Knowledge Execution)
 The AI must first allow the base Zero-Knowledge infrastructure to complete its targeted retrieval:
-1. **Formulate High-Density Query**:
+1. **Multi-Query RRF Hybrid Routing**:
    ```bash
-   python src/core/rag/zk_semantic_router.py "EXPLICIT_TECHNICAL_KEYWORDS" --top-k 5
+   # Standard telemetry inspection
+   python src/core/rag/zk_hybrid_router.py "EXPLICIT_TECHNICAL_KEYWORDS" --top-k 5
+
+   # Direct pipeline tags for compilation chaining
+   python src/core/rag/zk_hybrid_router.py "EXPLICIT_TECHNICAL_KEYWORDS" --tags-only
    ```
 2. **Compile Payload to Disk**:
    ```bash
@@ -97,7 +101,7 @@ With the compiled payload now loaded in context, the AI acts as a **Principal De
 | Resource | Access Permission | Method |
 |---|---|---|
 | **Raw Corpus Directory (`D-csR/`)** | ❌ **STRICTLY FORBIDDEN** | Direct reading, `cat`, `view_file` prohibited |
-| **ZK SQLite Database (`zk_private_rag.db`)** | 🔒 **TOOL-MEDIATED ONLY** | Accessed via `zk_semantic_router.py` & `zk_payload_compiler.py` |
+| **ZK SQLite Database (`zk_private_rag.db`)** | 🔒 **TOOL-MEDIATED ONLY** | Accessed via `zk_hybrid_router.py` & `zk_payload_compiler.py` |
 | **Compiled Workspace (`Secure_Output_Workspace.md`)** | ✅ **AUTHORIZED WITH `++`** | Read into context for analysis and synthesis |
 | **AI Context Window** | 🧠 **ACTIVE REASONING** | Receives ONLY targeted, compiled workspace payload |
 
@@ -118,7 +122,7 @@ Whenever `<RT>/<DDW-X> ++` is invoked, the AI MUST preface its technical respons
 
 When executing a `++` modified task:
 1. [ ] **Verify `++` Intent**: Confirm user prompt explicitly invoked the `++` modifier.
-2. [ ] **Execute Base ZK Retrieval**: Run `zk_semantic_router.py` -> `zk_payload_compiler.py`.
+2. [ ] **Execute Base ZK Retrieval**: Run `zk_hybrid_router.py --tags-only` -> `zk_payload_compiler.py`.
 3. [ ] **Safely Ingest Workspace**: Load `Secure_Output_Workspace.md` into context. Never touch `D-csR/`.
 4. [ ] **Deliver Elite Synthesis**: Apply full architectural intelligence to solve the user's problem.
 5. [ ] **Format Header**: Include the mandatory `[COGNITIVE BRIDGE ACTIVE]` preamble.

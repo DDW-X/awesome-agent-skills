@@ -1,6 +1,6 @@
 ---
 name: "<RT>/<DDW-X> Threat Hunting & Attack Surface Assessment Orchestrator"
-description: "Elite Red Team & Threat Hunting Orchestrator for DDW-X. Formulates adversary emulation strategies, maps ATT&CK matrices, and conducts zero-knowledge telemetry queries via zk_semantic_router.py and zk_payload_compiler.py."
+description: "Elite Red Team & Threat Hunting Orchestrator for DDW-X. Formulates adversary emulation strategies, maps ATT&CK matrices, and conducts zero-knowledge telemetry queries via zk_hybrid_router.py and zk_payload_compiler.py."
 ---
 
 # `<RT>/<DDW-X>` Threat Hunting & Attack Surface Assessment Orchestrator
@@ -23,13 +23,13 @@ Your mission is to perform elite adversary surface assessment, MITRE ATT&CK ente
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 2. Blind Keyword Generation & Semantic Routing                         │
-│    python src/core/rag/zk_semantic_router.py "<HUNTING_QUERY>"         │
+│ 2. Blind Multi-Query Formulation & RRF Hybrid Routing                  │
+│    python src/core/rag/zk_hybrid_router.py "<HUNTING_QUERY>"           │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 3. Mathematical TAG & Confidence Validation (BM25 Verification)        │
+│ 3. Mathematical TAG & Confidence Validation (RRF Consensus Metric)     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
@@ -63,10 +63,14 @@ Your mission is to perform elite adversary surface assessment, MITRE ATT&CK ente
 
 Whenever intelligence, playbooks, or data from the private dataset are needed:
 
-### Rule 1: Dynamic Semantic Query Formulation
-Extract dense technical keywords (e.g. `Sysmon Event ID 10 LSASS ProcessAccess mask 0x1010`) and route to the local BM25 engine:
+### Rule 1: Multi-Query RRF Hybrid Routing
+Extract dense technical keywords (e.g. `Sysmon Event ID 10 LSASS ProcessAccess mask 0x1010`) and route to the local RRF hybrid engine:
 ```bash
-python src/core/rag/zk_semantic_router.py "Sysmon process injection Event ID 8 10 LSASS" --top-k 5
+# Standard telemetry inspection
+python src/core/rag/zk_hybrid_router.py "Sysmon process injection Event ID 8 10 LSASS" --top-k 5
+
+# Direct pipeline tags
+python src/core/rag/zk_hybrid_router.py "Sysmon process injection Event ID 8 10 LSASS" --tags-only
 ```
 
 ### Rule 2: Air-Gapped Payload Compilation
@@ -85,6 +89,6 @@ python src/core/rag/zk_payload_compiler.py TAG-7A3B-1C TAG-9E2F-4D
 ## 4. Operational Checklist for AI Agents
 
 1. [ ] **Deconstruct Attack Vector**: Map request to explicit MITRE ATT&CK technique IDs.
-2. [ ] **Execute Blind Routing**: Query `zk_semantic_router.py` with expanded technical taxonomy.
+2. [ ] **Execute Blind Routing**: Query `zk_hybrid_router.py` with expanded technical taxonomy.
 3. [ ] **Compile Payload Air-Gapped**: Trigger `zk_payload_compiler.py` with verified TAGs.
 4. [ ] **Synthesize Defensive Architecture**: Deliver structured recommendations citing ATT&CK techniques without exposing raw data.

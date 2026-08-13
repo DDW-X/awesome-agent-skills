@@ -76,12 +76,14 @@ In autonomous coding environments, LLMs are only as capable as the operational c
 11. [Zero-Knowledge Master Skills & RAG Infrastructure](#-rtddw-x-zero-knowledge-master-skills--rag-infrastructure)
     - [Overview & Blind Semantic Abstraction Engine](#-overview--elite-capabilities)
     - [Dataset Extraction & Database Decompression](#-dataset-extraction-database-decompression--initialization)
+    - [Dynamic OSINT Stealth Injection](#-dynamic-osint-stealth-injection-autonomous-rag-expansion)
     - [Skill Installation & Environment Setup](#-skill-installation--setup)
     - [`<RT>/<DDW-X> Threat Hunting & Attack Surface`](#-1-agentsskillsrtrt-ddw-x-threat-hunting-attack-surfacemd)
     - [`<RT>/<DDW-X> Reverse Engineering & Binary Forensics`](#-2-agentsskillsrtrt-ddw-x-reverse-engineering-binary-forensicsmd)
     - [`<RT>/<DDW-X> SAST & Secure Code Auditing`](#-3-agentsskillsrtrt-ddw-x-sast-code-auditingmd)
     - [`<RT>/<DDW-X> AI Safety & LLM Red Teaming`](#-4-agentsskillsrtrt-ddw-x-ai-safety-guardrailsmd)
     - [`<RT>/<DDW-X> ++ Cognitive Bridge Modifier`](#-5-agentsskillsrtrt-ddw-x-cognitive-bridge-plusplusmd)
+    - [`<RT>/<DDW-X> Dynamic Autonomous Expander`](#-6-agentsskillsrtrt-ddw-x-dynamic-autonomous-expandermd)
     - [Air-Gapped Workflow & Usage Guide](#-usage-guide--air-gapped-workflow)
     - [The Cognitive Bridge: Using the `++` Modifier](#-the-cognitive-bridge-using-the--modifier)
     - [Agent Installation Prompt: Zero-Knowledge RAG Division](#️-agent-installation-prompt-zero-knowledge-rag-division)
@@ -676,8 +678,8 @@ The **`<RT>/<DDW-X>` Division** introduces the **Zero-Knowledge Blind Semantic A
  │                                ▼                                                       │
  │  ┌──────────────────────────────────────────────────────────────────────────────────┐  │
  │  │ AI AGENT: ELITE BLIND ORCHESTRATOR (Zero Raw Text Exposure)                     │  │
- │  │ Formulates BM25 Search Vector ──► [zk_semantic_router.py]                        │  │
- │  │ Returns ONLY Cryptographic UUIDs: ["TAG-0x89F2", "TAG-0xA1C4", "TAG-0x55E9"]    │  │
+ │  │ Multi-Query RRF Vector Expansion ──► [zk_hybrid_router.py]                      │  │
+ │  │ Returns ONLY Cryptographic UUIDs: ["TAG-24AF-22", "TAG-D5A0-22", "TAG-A9EA-22"]  │  │
  │  └─────────────────────────────────┬────────────────────────────────────────────────┘  │
  │                                    │                                                   │
  │                                    ▼                                                   │
@@ -697,15 +699,15 @@ The `<RT>/<DDW-X>` architecture partitions security operations across four speci
 
 | Master Skill Domain | Key Operational Capabilities | RAG Integration Tool |
 |---|---|---|
-| **<img src="assets/icons/network.svg" width="16" height="16" align="absmiddle" /> Threat Hunting & Detection** | MITRE ATT&CK Enterprise telemetry, high-signal Sysmon XML filters (EID 1, 8, 10), and multi-target Sigma compilers (Splunk SPL & Elastic DSL). | `zk_semantic_router.py` |
+| **<img src="assets/icons/network.svg" width="16" height="16" align="absmiddle" /> Threat Hunting & Detection** | MITRE ATT&CK Enterprise telemetry, high-signal Sysmon XML filters (EID 1, 8, 10), and multi-target Sigma compilers (Splunk SPL & Elastic DSL). | `zk_hybrid_router.py` |
 | **<img src="assets/icons/lock.svg" width="16" height="16" align="absmiddle" /> Reverse Engineering & Decompilation** | Headless Ghidra JSON-RPC socket bridging (`127.0.0.1:13337`), PE/ELF structural header dissection, Shannon section entropy profiling, and OLLVM CFG de-flattening. | `bridge_mcp_ghidra.py` |
 | **<img src="assets/icons/audit.svg" width="16" height="16" align="absmiddle" /> AST Security & SAST Auditing** | Python native `ast.NodeVisitor` syntax tree linters for code injection (`eval`/`exec`), command injection (`subprocess shell=True`), and OWASP Top 10 remediation (A01, A03, A10). | `zk_payload_compiler.py` |
-| **<img src="assets/icons/cpu.svg" width="16" height="16" align="absmiddle" /> AI Safety & LLM Red Teaming** | Prompt injection defense engines, heuristic jailbreak filters, constitutional boundary delimiters, and autonomous tool sandboxing. | `zk_semantic_router.py` |
+| **<img src="assets/icons/cpu.svg" width="16" height="16" align="absmiddle" /> AI Safety & LLM Red Teaming** | Prompt injection defense engines, heuristic jailbreak filters, constitutional boundary delimiters, and autonomous tool sandboxing. | `zk_hybrid_router.py` |
 
 #### 🔒 The Blind Semantic Abstraction Engine
 Unlike traditional RAG systems that flood the LLM's active reasoning context with hundreds of kilobytes of unvetted text, the **Blind Orchestrator** never directly reads or ingests sensitive source documents:
-- **Mathematical Token Routing**: The AI formulates high-precision BM25 search queries and executes `zk_semantic_router.py`.
-- **Abstract Cryptographic Tags**: The router queries `D-csR_Index/zk_private_rag.db` and returns purely mathematical identifiers (**TAGs** e.g., `TAG-0x89F2`).
+- **Multi-Query Reciprocal Rank Fusion (RRF) Routing**: The AI executes `zk_hybrid_router.py`, which dynamically expands single queries into 4 orthogonal search spaces (base keywords, MITRE ATT&CK TTPs, Sysmon/Auditd telemetry signatures, and tool artifacts) and mathematically fuses parallel BM25 rankings via Reciprocal Rank Fusion ($RRF(d) = \sum \frac{w_q}{k + \text{rank}_q(d)}$ with $k=60$).
+- **Abstract Cryptographic Tags**: The router queries `D-csR_Index/zk_private_rag.db` and returns purely mathematical identifiers (**TAGs** e.g., `TAG-24AF-22`).
 - **Air-Gapped Local Output**: The AI passes these TAGs to `zk_payload_compiler.py`, which fetches and writes the verified payload directly to disk (`Secure_Output_Workspace.md`) in an isolated, air-gapped process without sending raw plain text to inference APIs.
 
 ---
@@ -742,14 +744,45 @@ python src/core/rag/zk_advanced_indexer.py --source-dir D-csR --index-dir D-csR_
 
 ---
 
+### 💉 Dynamic OSINT Stealth Injection (Autonomous RAG Expansion)
+
+To transition from a static repository archive to a **Self-Expanding, Autonomous Zero-Knowledge RAG**, the `<RT>/<DDW-X>` engine includes **`src/core/rag/zk_stealth_injector.py`**.
+
+The Stealth Injector bridges live web feeds, vendor advisories, and local files directly into the private database:
+1. **DOM Sanitization & Boilerplate Stripping**: Extracts raw HTML, strips scripts, CSS, and navigation artifacts, isolating pure semantic technical intelligence.
+2. **Cognitive Chunk Refiner**: Formats unstructured data into 500-token semantic chunks with 50-token overlaps and cluster tags.
+3. **Atomic SQLite FTS5 Transaction**: Mints collision-resistant cryptographic TAGs (`TAG-XXXX-YY`) and executes `BEGIN IMMEDIATE;` writes under Write-Ahead Logging (WAL) mode to prevent index corruption.
+4. **Zero-Knowledge Topology Sync**: Atomically appends metadata to `D-csR_Index/zk_topology_map.json` without leaking raw text.
+
+#### 🚀 CLI Ingestion Commands:
+
+```bash
+# ---------------------------------------------------------
+# Inject live intelligence from a URL directly into the ZK Database
+# ---------------------------------------------------------
+python src/core/rag/zk_stealth_injector.py --url "https://example.com/advisory" --source-tag "cve_2026_advisory"
+
+# ---------------------------------------------------------
+# Inject a local intelligence document or threat report
+# ---------------------------------------------------------
+python src/core/rag/zk_stealth_injector.py --file "path/to/threat_intel.md"
+
+# ---------------------------------------------------------
+# Inject raw string text directly via CLI
+# ---------------------------------------------------------
+python src/core/rag/zk_stealth_injector.py --text "Raw threat indicator description..." --source-tag "manual_telemetry"
+```
+
+---
+
 ### ⚙️ Skill Installation & Setup
 
 The `<RT>/<DDW-X>` Master Skills are located in `.agents/skills/RT/` (and linked via `Skills-CS/`). To register them in your IDE agentic runtime:
 
 1. **Google Antigravity IDE**: Place the `.md` skills directly into `.agents/skills/` or invoke them via the Master Orchestrator prompt.
 2. **Cursor AI**: Symlink or reference the skill instructions inside `.cursorrules` to enforce continuous AST and security auditing during code editing.
-3. **Claude Code CLI**: Add `.agents/skills/RT/` to your project system context to enable automated `zk_semantic_router.py` tool calling.
-4. **Execution Permissions**: Ensure Python 3.10+ is accessible in your system `PATH` and that your IDE agent has execution permissions to invoke `zk_semantic_router.py` and `zk_payload_compiler.py`.
+3. **Claude Code CLI**: Add `.agents/skills/RT/` to your project system context to enable automated `zk_hybrid_router.py` tool calling.
+4. **Execution Permissions**: Ensure Python 3.10+ is accessible in your system `PATH` and that your IDE agent has execution permissions to invoke `zk_hybrid_router.py` and `zk_payload_compiler.py`.
 
 ---
 
@@ -765,12 +798,11 @@ The `<RT>/<DDW-X>` Master Skills are located in `.agents/skills/RT/` (and linked
 ```python
 # [ZERO-KNOWLEDGE ROUTER] Dynamic Threat Hunting & ATT&CK Matrix Retrieval
 def route_threat_hunting_intel(ttp_query: str, top_k: int = 5) -> list:
-    """Routes MITRE ATT&CK and Sysmon telemetry keywords to cryptographic tags."""
-    cmd = ["python", "src/core/rag/zk_semantic_router.py", f"MITRE ATT&CK {ttp_query} Sysmon EID telemetry", "--top-k", str(top_k), "--json"]
+    """Routes MITRE ATT&CK and Sysmon telemetry keywords to cryptographic tags via RRF."""
+    cmd = ["python", "src/core/rag/zk_hybrid_router.py", f"{ttp_query} Sysmon EID telemetry", "--top-k", str(top_k), "--tags-only"]
     res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    routes = json.loads(res.stdout)
-    # Extracts only mathematical tags (Zero Raw Text Ingestion)
-    return [r["tag"] for r in routes if r["confidence_pct"] >= 80.0]
+    tags = res.stdout.strip().split()
+    return tags
 ```
 
 ---
@@ -789,9 +821,9 @@ def route_threat_hunting_intel(ttp_query: str, top_k: int = 5) -> list:
 def route_binary_forensics_spec(header_type: str, arch: str = "x86_64") -> list:
     """Routes PE/ELF structural header and OLLVM de-obfuscation queries to ZK tags."""
     query = f"{header_type} {arch} PE structural header Shannon entropy OLLVM de-flattening"
-    cmd = ["python", "src/core/rag/zk_semantic_router.py", query, "--top-k", "5", "--json"]
+    cmd = ["python", "src/core/rag/zk_hybrid_router.py", query, "--top-k", "5", "--tags-only"]
     res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    tags = [item["tag"] for item in json.loads(res.stdout)]
+    tags = res.stdout.strip().split()
     # Air-Gapped compilation to local workspace
     subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags], check=True)
     return tags
@@ -836,10 +868,9 @@ class ASTSecurityAuditor(ast.NodeVisitor):
 def route_ai_guardrails_intel(attack_vector: str) -> list:
     """Routes LLM red teaming patterns and constitutional guardrails to ZK tags."""
     query = f"prompt injection {attack_vector} delimiter isolation constitutional guardrails"
-    cmd = ["python", "src/core/rag/zk_semantic_router.py", query, "--top-k", "3", "--json"]
+    cmd = ["python", "src/core/rag/zk_hybrid_router.py", query, "--top-k", "3", "--tags-only"]
     res = subprocess.run(cmd, capture_output=True, text=True, check=True)
-    routes = json.loads(res.stdout)
-    tags = [r["tag"] for r in routes]
+    tags = res.stdout.strip().split()
     subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags], check=True)
     return tags
 ```
@@ -860,7 +891,7 @@ def route_ai_guardrails_intel(attack_vector: str) -> list:
 def execute_cognitive_bridge_pipeline(user_query: str, skill_name: str) -> str:
     """Executes ZK routing, compiles payload, and safely ingests only the workspace file."""
     # Step 1: Execute Blind Routing & Air-Gapped Compilation
-    router_res = subprocess.run(["python", "src/core/rag/zk_semantic_router.py", user_query, "--tags-only"], capture_output=True, text=True, check=True)
+    router_res = subprocess.run(["python", "src/core/rag/zk_hybrid_router.py", user_query, "--tags-only"], capture_output=True, text=True, check=True)
     tags = router_res.stdout.strip().split()
     subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags, "--output", "Secure_Output_Workspace.md"], check=True)
     
@@ -874,6 +905,33 @@ def execute_cognitive_bridge_pipeline(user_query: str, skill_name: str) -> str:
 
 ---
 
+### <img src="assets/icons/search.svg" width="18" height="18" align="absmiddle" alt="search" /> 6. [`Skills-RT/RT-DDW-X-Dynamic-Autonomous-Expander.md`](file:///c:/Users/sorena/Desktop/ddw-x%20clone/skillssssssssssssssssssssssss/.agents/skills/RT/RT-DDW-X-Dynamic-Autonomous-Expander.md)
+- **Role**: *Autonomous RAG Expander & Web-to-Offline Bridge*
+- **RAG Data Sources**: `D-csR_Index/zk_private_rag.db` & Live OSINT Web Streams.
+- **Embedded Capabilities**:
+  - **Autonomous Knowledge Gap Detection**: Triggers expansion loop when BM25 retrieval confidence falls below `60.0%` or yields zero matching routes.
+  - **Zero-Pollution URL Discovery**: Locates technical URLs without pulling raw HTML text into active conversation context.
+  - **Blind Stealth Injection Dispatch**: Automatically commands `zk_stealth_injector.py` to ingest, refine, and mint cryptographic TAGs into the SQLite index.
+  - **Circuit-Breaker Protection**: Strictly limits execution to a **Max 1 Retry** per user turn to prevent infinite recursion loops and conserve token budgets.
+
+```python
+# [AUTONOMOUS EXPANSION PROTOCOL] Self-Expanding Web Discovery & Ingestion Pipeline
+def trigger_autonomous_expansion_loop(query_terms: str, discovered_url: str) -> list:
+    """Dispatches stealth injection and re-queries BM25 index with max-1 retry gate."""
+    # Step 1: Blind Stealth Injection into SQLite Database
+    subprocess.run(["python", "src/core/rag/zk_stealth_injector.py", "--url", discovered_url], check=True)
+    
+    # Step 2: Immediate Re-Query of enriched FTS5 index via Hybrid Router
+    res = subprocess.run(["python", "src/core/rag/zk_hybrid_router.py", query_terms, "--top-k", "5", "--tags-only"], capture_output=True, text=True, check=True)
+    tags = res.stdout.strip().split()
+    
+    # Step 3: Reconstitute air-gapped payload to disk
+    subprocess.run(["python", "src/core/rag/zk_payload_compiler.py", *tags], check=True)
+    return tags
+```
+
+---
+
 ### 🔄 Usage Guide & Air-Gapped Workflow
 
 When interacting with an agent equipped with `<RT>/<DDW-X>` Master Skills, the execution follows an autonomous 4-stage Zero-Knowledge pipeline:
@@ -882,14 +940,14 @@ When interacting with an agent equipped with `<RT>/<DDW-X>` Master Skills, the e
 [STAGE 1: User Directive]
    User asks: "Audit this Python backend for OWASP A03 SQL Injection and generate remediation diffs."
 
-[STAGE 2: Blind Semantic Routing]
+[STAGE 2: Blind Semantic Routing via Multi-Query RRF]
    Agent executes:
-   python src/core/rag/zk_semantic_router.py --query "OWASP A03 SQL Injection parameterized query AST"
-   Router Output: ["TAG-0x1102", "TAG-0x1105", "TAG-0x2409"]
+   python src/core/rag/zk_hybrid_router.py "OWASP A03 SQL Injection parameterized query AST" --tags-only
+   Router Output: ["TAG-0331-5F", "TAG-8E95-A0", "TAG-999B-AC"]
 
 [STAGE 3: Air-Gapped Payload Compilation]
    Agent executes:
-   python src/core/rag/zk_payload_compiler.py --tags TAG-0x1102,TAG-0x1105,TAG-0x2409 --output Secure_Output_Workspace.md
+   python src/core/rag/zk_payload_compiler.py TAG-0331-5F TAG-8E95-A0 TAG-999B-AC --output Secure_Output_Workspace.md
 
 [STAGE 4: Local Inspection & Execution]
    Payload is compiled to disk without passing raw sensitive data through external AI inference endpoints.
@@ -907,7 +965,7 @@ The `<RT>/<DDW-X>` ecosystem features a built-in **Dual-Mode Execution Architect
 
 #### 2. How it Works: The Ingestion Protocol
 When the `++` modifier is engaged:
-1. **Air-Gapped Compilation**: The system executes the base Zero-Knowledge routing through `zk_semantic_router.py` and compiles the matched payload into `Secure_Output_Workspace.md` via `zk_payload_compiler.py`.
+1. **Air-Gapped Compilation**: The system executes the base Zero-Knowledge routing through `zk_hybrid_router.py` and compiles the matched payload into `Secure_Output_Workspace.md` via `zk_payload_compiler.py`.
 2. **Authorized Workspace Ingestion**: The AI is granted explicit permission to read and ingest **ONLY** the compiled `Secure_Output_Workspace.md` file from the local workspace.
 3. **Deep Cognitive Synthesis**: With the verified payload loaded into reasoning context, the AI applies full architectural intelligence to dissect AST trees, evaluate TTPs, reconstruct pseudo-C decompilations, rewrite insecure code, and formulate end-to-end remediation plans.
 
@@ -925,7 +983,7 @@ To trigger the Cognitive Bridge and receive active analysis and code synthesis:
 
 ### 🛡️ Agent Installation Prompt: Zero-Knowledge RAG Division
 
-> **Copy & Paste this prompt directly into Cursor, Antigravity IDE, Claude Code, or VS Code Copilot to activate all 5 Master Skills in the Zero-Knowledge RAG Division:**
+> **Copy & Paste this prompt directly into Cursor, Antigravity IDE, Claude Code, or VS Code Copilot to activate all 6 Master Skills in the Zero-Knowledge RAG Division:**
 
 ```markdown
 Act as the Principal AI Zero-Knowledge Architect and Security Diagnostics Engineer.
@@ -938,16 +996,21 @@ Task Instructions:
    - `<RT>/<DDW-X> SAST & Secure Code Auditing Architect` (`RT-DDW-X-SAST-Code-Auditing.md`)
    - `<RT>/<DDW-X> AI Safety, Red Teaming & Guardrails Architect` (`RT-DDW-X-AI-Safety-Guardrails.md`)
    - `<RT>/<DDW-X> ++ Cognitive Bridge Modifier` (`RT-DDW-X-Cognitive-Bridge-PlusPlus.md`)
+   - `<RT>/<DDW-X> Dynamic Autonomous Expander` (`RT-DDW-X-Dynamic-Autonomous-Expander.md`)
 2. Verify the availability of the Zero-Knowledge database at `D-csR_Index/zk_private_rag.db` (ensure `zk_private_rag.rar` is unrarred or run `zk_advanced_indexer.py`).
 3. By default, operate as an Elite Blind Orchestrator:
-   - Formulate targeted BM25 search queries and execute `python src/core/rag/zk_semantic_router.py "<search terms>" --top-k 5`.
-   - Receive the mathematical UUID tags (e.g. `TAG-4F91-B2`, `TAG-8A14-C9`).
+   - Formulate targeted queries and execute `python src/core/rag/zk_hybrid_router.py "<search terms>" --top-k 5`.
+   - Receive the mathematical UUID tags (e.g. `TAG-24AF-22`, `TAG-D5A0-22`).
    - Execute `python src/core/rag/zk_payload_compiler.py TAG-1 TAG-2 --output Secure_Output_Workspace.md` to reconstitute verified diagnostic data directly to local disk.
    - Conclude: "I have routed your request through the BM25 index and securely compiled the optimal payload into `Secure_Output_Workspace.md`. I have not viewed the contents."
 4. When the user appends the `++` modifier (e.g., "Use Threat Hunting ++"), activate the Cognitive Bridge:
    - Allow the base ZK skill to route and compile to `Secure_Output_Workspace.md`.
    - Safely ingest ONLY `Secure_Output_Workspace.md` into context (NEVER read raw `D-csR/` files directly).
    - Unleash Principal Security Engineer reasoning to analyze, refactor, and synthesize the extracted payloads.
+5. When offline database confidence is low (<60%), activate the Autonomous Expander:
+   - Locate authoritative technical URLs on the web (without loading full page bodies into context).
+   - Execute `python src/core/rag/zk_stealth_injector.py --url "<FOUND_URL>"` to inject new intelligence blindly.
+   - Re-query the enriched index via `zk_hybrid_router.py --tags-only` and compile verified findings to `Secure_Output_Workspace.md`.
 ```
 
 ---

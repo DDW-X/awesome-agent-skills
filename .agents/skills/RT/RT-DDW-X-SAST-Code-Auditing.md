@@ -23,13 +23,13 @@ Your mission is to perform elite static source code vulnerability analysis, AST-
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 2. Blind Keyword Formulation & Semantic Routing                        │
-│    python src/core/rag/zk_semantic_router.py "<AUDIT_QUERY>"           │
+│ 2. Blind Multi-Query Formulation & RRF Hybrid Routing                  │
+│    python src/core/rag/zk_hybrid_router.py "<AUDIT_QUERY>"             │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
-│ 3. Mathematical TAG & Confidence Validation (BM25 Verification)        │
+│ 3. Mathematical TAG & Confidence Validation (RRF Consensus Metric)     │
 └───────────────────────────────────┬────────────────────────────────────┘
                                     │
                                     ▼
@@ -63,14 +63,18 @@ Your mission is to perform elite static source code vulnerability analysis, AST-
 
 Whenever security specifications, rule definitions, or patterns from the private corpus are needed:
 
-### Rule 1: Formulate Technical Search Keywords
-Extract target vulnerability classes, AST node types, and defensive patterns:
+### Rule 1: Multi-Query RRF Hybrid Routing
+Extract target vulnerability classes, AST node types, and defensive patterns and route to the local RRF hybrid router:
 ```bash
-python src/core/rag/zk_semantic_router.py "AST NodeVisitor taint tracking SQLi parameterization path traversal" --top-k 5
+# Standard telemetry inspection
+python src/core/rag/zk_hybrid_router.py "AST NodeVisitor taint tracking SQLi parameterization path traversal" --top-k 5
+
+# Direct pipeline tags
+python src/core/rag/zk_hybrid_router.py "AST NodeVisitor taint tracking SQLi parameterization path traversal" --tags-only
 ```
 
 ### Rule 2: Air-Gapped Payload Compilation
-Pass top BM25 confidence TAGs directly into the compiler:
+Pass top fused confidence TAGs directly into the compiler:
 ```bash
 python src/core/rag/zk_payload_compiler.py TAG-5A2C-9E TAG-7F10-3B
 ```
@@ -85,6 +89,6 @@ python src/core/rag/zk_payload_compiler.py TAG-5A2C-9E TAG-7F10-3B
 ## 4. Operational Checklist for AI Agents
 
 1. [ ] **Parse Target Syntax Tree**: Model source-to-sink data flow and identify unvalidated input entrypoints.
-2. [ ] **Route via Blind Engine**: Execute `zk_semantic_router.py` with refined vulnerability taxonomy.
+2. [ ] **Route via Blind Engine**: Execute `zk_hybrid_router.py` with refined vulnerability taxonomy.
 3. [ ] **Compile Payload Air-Gapped**: Trigger `zk_payload_compiler.py` with verified TAGs.
 4. [ ] **Generate Remediated Code**: Provide secure, production-grade replacement patterns with strict type safety.
